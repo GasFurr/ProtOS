@@ -1,5 +1,5 @@
 # ProtOS
-## ProtOS is my experimental Operating System.
+### ProtOS is my experimental Operating System.
 
 My idea is to make quick and EASY to UNDERSTAND operating system using mostly C (maybe C++), and my own software language - Owlang.
 It's unlikely that anyone will run this OS on any machine other than my laptop, but I'll still make an easy-to-use installer of my own (hi, Arch)
