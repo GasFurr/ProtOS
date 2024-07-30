@@ -17,3 +17,8 @@ If you're a real programmer, run my OS and see a bug, or an obvious error in the
 
 # TODO
 
+1. Entry point [ ]
+2. Kernel [ ]
+   - Keyboard Driver
+   - Input-Output
+3. Soon...
