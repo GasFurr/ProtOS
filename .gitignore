@@ -1,15 +1,7 @@
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-# Ignore build contents
-build/*
 # Ignore qemu firmware.
 tools/firmware/*
->>>>>>> Stashed changes
-=======
 # Ignore build contents
 build/*
->>>>>>> 115eeebda238da9d993643e45c0fa21b7deb5c67
 # Prerequisites
 *.d
 
