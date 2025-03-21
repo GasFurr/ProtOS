@@ -1,3 +1,10 @@
+<<<<<<< Updated upstream
+=======
+# Ignore build contents
+build/*
+# Ignore qemu firmware.
+tools/firmware/*
+>>>>>>> Stashed changes
 # Prerequisites
 *.d
 
