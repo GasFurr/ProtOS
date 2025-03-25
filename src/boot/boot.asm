@@ -21,11 +21,11 @@ header_end:
 
 section .text
 global start
-extern kernel_entry
+extern kernel_init
 start:
   mov esp, stack_top
   push ebx
-  call kernel_entry
+  call kernel_init 
   hlt
   
 

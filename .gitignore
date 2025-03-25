@@ -4,6 +4,8 @@ tools/firmware/*
 build/*
 # ignore release folderr
 release/
+# ignore my lsp configs
+.clangd
 # Prerequisites
 *.d
 

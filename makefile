@@ -6,7 +6,7 @@ GRUB_FILE = grub-mkrescue
 # Flags
 ASMFLAGS = -f elf32
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
-         -nostartfiles -nodefaultlibs -Wall -Wextra -Iheaders/
+         -nostartfiles -nodefaultlibs -Wall -Wextra -Iheaders
 LDFLAGS = -m elf_i386 -T src/linker.ld
 
 # Directories
@@ -19,11 +19,13 @@ RELEASE_DIR = release/
 # Source files
 BOOT_SRC = src/boot/boot.asm
 KERNEL_SRC = src/kernel/kernel.c
+INIT_SRC = src/kernel/init.c
 LIB_SRC = src/lib/library.c
 
 # Object files
 BOOT_OBJ = $(BUILD_DIR)/boot.o
 KERNEL_OBJ = $(BUILD_DIR)/kernel.o
+INIT_OBJ = $(BUILD_DIR)/init.o
 LIB_OBJ = $(BUILD_DIR)/library.o
 
 .PHONY: all clean run iso
@@ -37,6 +39,10 @@ $(KERNEL): $(BOOT_OBJ) $(KERNEL_OBJ) $(LIB_OBJ)
 $(BOOT_OBJ): $(BOOT_SRC)
 	@mkdir -p $(BUILD_DIR)
 	$(ASM) $(ASMFLAGS) $< -o $@
+
+$(INIT_OBJ): $(INIT_SRC)
+	@mkdir -p $(BUILD_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(KERNEL_OBJ): $(KERNEL_SRC)
 	@mkdir -p $(BUILD_DIR)
