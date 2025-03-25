@@ -12,8 +12,9 @@ LDFLAGS = -m elf_i386 -T src/linker.ld
 # Directories
 BUILD_DIR = build
 ISO_DIR = build/isofiles
-KERNEL = myos.kernel
-ISO = myos.iso
+KERNEL = protos-alpha.kernel
+ISO = release/protos-alpha.iso
+RELEASE_DIR = release/
 
 # Source files
 BOOT_SRC = src/boot/boot.asm
@@ -47,6 +48,7 @@ $(LIB_OBJ): $(LIB_SRC)
 
 iso: $(KERNEL)
 	@mkdir -p $(ISO_DIR)/boot/grub
+	mkdir -p $(RELEASE_DIR)
 	cp conf/grub.cfg $(ISO_DIR)/boot/grub/
 	cp $(BUILD_DIR)/$(KERNEL) $(ISO_DIR)/boot/
 	$(GRUB_FILE) -o $(ISO) $(ISO_DIR)

@@ -2,6 +2,8 @@
 tools/firmware/*
 # Ignore build contents
 build/*
+# ignore release folderr
+release/
 # Prerequisites
 *.d
 
