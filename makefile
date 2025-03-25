@@ -11,7 +11,7 @@ LDFLAGS = -m elf_i386 -T src/linker.ld
 
 # Directories
 BUILD_DIR = build
-ISO_DIR = isofiles
+ISO_DIR = build/isofiles
 KERNEL = myos.kernel
 ISO = myos.iso
 
