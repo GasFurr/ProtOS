@@ -7,6 +7,7 @@
 # ProtOS- - - -///
 **ProtOS is a small hobby operating system for real modern hardware. Lots of plans and little time.**
 
+
 ## Planned
 GRUB and UEFI compatibility, high modularity and speed. Single-file NIX-style configuration. Easy to understand, readable code, good documentation. As a result, easy to maintain and extend. For now - in C. In the future, it may be rewritten in zig when the language becomes more mature. I love C, but it's almost 60 years old.
 
