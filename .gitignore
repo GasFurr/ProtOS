@@ -4,8 +4,11 @@ firmware/*
 # Ignore build folder contents
 build/*
 
-# ignore release folder contents
+# Ignore release folder contents
 release/
+
+# Ignore cache files
+.cache/
 
 # Object files
 *.o
