@@ -1,4 +1,4 @@
-![ProtOS-banner4](https://github.com/user-attachments/assets/b8655e70-8656-4d5c-9548-f33023c1e720)
+![ProtOS4](https://github.com/user-attachments/assets/3c318205-7c17-4251-96b8-6c703f70d232)
 
 > ⚠ Warning
 > ProtOS is currently in the early stages of development. Here be dragons!
