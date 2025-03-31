@@ -1,3 +1,8 @@
+![ProtOS2](https://github.com/user-attachments/assets/70eb73eb-a2b9-47ca-9201-89de37c487b1)
+
+> ⚠ Warning
+> ProtOS is currently in the early stages of development. Here be dragons!
+
 # ProtOS- - - -///
 > ProtOS is a small hobby operating system for real modern hardware. Lots of plans and little time.
 
