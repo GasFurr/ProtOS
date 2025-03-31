@@ -1,32 +1,143 @@
-![image](https://github.com/user-attachments/assets/5f8269bf-997f-4cbc-92c1-9cda7ad919ec)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/5f8269bf-997f-4cbc-92c1-9cda7ad919ec" alt="ProtOS Logo" width="800">
+</p>
 
+<h3 align="center">🛠 Rethink the Wheel | 🐾 Paws-on Development | 🔵 Blueprint for Modern Computing</h3>
 
-> ⚠ Warning
-> ProtOS is currently in the early stages of development. Here be dragons!
+<div align="center">
+  
+  [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+  ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/GasFurr/ProtOS)
+  ![Version](https://img.shields.io/badge/Version-0.1.3--alpha-red)
+  [![Build](https://img.shields.io/badge/Build-Passing-brightgreen)](https://github.com/GasFurr/ProtOS/actions)
 
-# ProtOS- - - -///
-**ProtOS is a small hobby operating system for real modern hardware. Lots of plans and little time.**
+</div>
 
+---
 
-## Planned
-GRUB and UEFI compatibility, high modularity and speed. Single-file NIX-style configuration. Easy to understand, readable code, good documentation. As a result, easy to maintain and extend. For now - in C. In the future, it may be rewritten in zig when the language becomes more mature. I love C, but it's almost 60 years old.
+> **⚠️ Dragon Warning**  
+> ProtOS is currently in its embryonic stage. Expect broken code, sudden rewrites, and occasional tears. Not suitable for production (or sanity).
 
+## 🚀 Philosophy in Three Acts
 
+<div align="center">
 
-## TODO
+**⚡ Fast & Fresh**  
+*Modern hardware deserves modern software - no legacy baggage allowed*
+
+**🧩 Modular by Design**  
+*Like LEGO for operating systems - snap components together*
+
+**🔭 Future-First**  
+*Why walk when you can teleport? UEFI-only, GRUB-powered foundation*
+
+</div>
+
+---
+
+## 📦 Project Anatomy
+
+```bash
+ProtOS/
+├── build/          # Compiled objects
+├── docs/           # Documentation womb
+├── grub/           # Bootloader configs
+├── headers/        # C headers party
+├── src/            # Kernel guts
+│   ├── boot/       # Boot sequence acrobatics
+│   ├── drivers/    # Hardware whisperers
+│   └── kernel/     # Core brain surgery
+└── tools/          # Build-time gadgets
 ```
-- boot.asm.....................|0
-- Basic makefile...............|1
-- grub.cfg.....................|1
-- Make mb2 tags parser.........|0
-- IDT and GDT..................|0
-- Basic graphics driver........|0
-- Text mode driver.............|0
-- Keyboard interrupts handler).|0
-- Keyboard and time drivers....|0
-- Basic command line (bschell).|0
+
+## 🛠️ Building the Beast
+### Summon dependencies (choose your distro flavor)
+<details>
+<summary>Arch/Manjaro (yay required)</summary>
+
+```bash
+# Summon compiler dragons (i use arch btw)
+yay -S grub nasm gcc binutils qemu-full edk2-ovmf
+```
+</details>
+
+<details>
+<summary>Debian/Ubuntu (apt required)</summary>
+
+```bash
+# For our Debian/Ubuntu friends:
+sudo apt install grub-pc nasm gcc binutils qemu-system-x86 ovmf
+```
+</details>
+
+
+```bash
+# Clone with surgical precision
+git clone https://github.com/GasFurr/ProtOS.git
+
+# Summon the build spirits
+make all
+
+# For brave souls only:
+make run
 ```
 
-When all this is done, I will update the TODO. While the implementation is in progress, I will put 1 next to the completed tasks.
+---
 
-Full documentation in the future. I will write it parallel with working on other things.
+> **🐉 Dragon's Note**  
+> QEMU testing requires OVMF firmware. We don't ship it for the same reason
+> dragons don't share gold: Lawyers. Get yours from 
+> [EDK2](https://github.com/tianocore/edk2) or `sudo pacman -S edk2-ovmf`
+> then copy `OVMF_CODE.fd` to firmware folder. No hoard, no boot!
+
+---
+
+## 📋 Progress Report (Survival Mode)
+
+| Task                          | Status    | Notes               |
+|-------------------------------|-----------|---------------------|
+| boot.asm                      | 🐾 0%     | Assembler yoga      |
+| Basic makefile                | 🎉 100%   | Builds without fire |
+| grub.cfg                      | 🎉 100%   | Bootloader ready    |
+| MB2 tags parser               | 🐾 0%     | Multiboot mysteries |
+| IDT & GDT                     | 🐾 0%     | CPU gatekeeping     |
+| Graphics/text mode drivers    | 🐾 0%     | Pixel uwusability   |
+| Keyboard interwupts           | 🐾 0%     | Keypress archaeology|
+| Time drivers                  | 🐾 0%     | Chronomancy         |
+| bschell                       | 🐾 0%     | Terminal therapy    |
+
+---
+
+## 🔮 Crystal Ball (Roadmap)
+- **Phase 1**: Make computer go beep (hardware communication)
+- **Phase 2**: Pretend we're UNIX (basic shell operations)
+- **Phase 3**: ??? (profit)
+
+---
+
+## 📜 License to Tinker
+MIT Licensed - Do whatever you want, but maybe mention us if it blows up.  
+*"Rethink the Wheel"* isn't just a slogan - it's a way of life (and possibly yarn).
+
+---
+
+<div align="center">
+  
+## 📬 Contact
+Got questions, suggestions, or dragon taming tips?  
+📧 [gasfurri@gmail.com](mailto:gasfurri@gmail.com)
+  
+  ![GitHub last commit](https://img.shields.io/github/last-commit/GasFurr/ProtOS?color=blue)
+
+</div>
+
+---
+
+```asciiart
+ /\_/\  
+( o.o ) 
+ > ^ <  /* Compiles with love */
+```
+
+"UNIX is user-friendly. It’s just selective about who its friends are" 
+(carved on a kernel developer's tombstone)
