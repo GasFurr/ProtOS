@@ -16,7 +16,7 @@ GRUB and UEFI compatibility, high modularity and speed. Single-file NIX-style co
 ## TODO
 ```
 - boot.asm.....................|0
-- Basic makefile...............|0
+- Basic makefile...............|1
 - grub.cfg.....................|1
 - Make mb2 tags parser.........|0
 - IDT and GDT..................|0
