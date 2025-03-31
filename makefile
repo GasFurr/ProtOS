@@ -21,35 +21,39 @@ BOOT_SRC = src/boot/boot.asm
 KERNEL_SRC = src/kernel/kernel.c
 INIT_SRC = src/kernel/init.c
 LIB_SRC = src/lib/library.c
-
+DRIVERS_SRC = $(wildcard src/drivers/*.c)
 # Object files
-BOOT_OBJ = $(BUILD_DIR)/boot.o
-KERNEL_OBJ = $(BUILD_DIR)/kernel.o
-INIT_OBJ = $(BUILD_DIR)/init.o
-LIB_OBJ = $(BUILD_DIR)/library.o
-
+BOOT_OBJ = $(BUILD_DIR)/boot/boot.o
+KERNEL_OBJ = $(BUILD_DIR)/kernel/kernel.o
+INIT_OBJ = $(BUILD_DIR)/kernel/init.o
+LIB_OBJ = $(BUILD_DIR)/lib/library.o
+DRIVERS_OBJ = $(patsubst src/drivers/%.c,$(BUILD_DIR)/drivers/%.o,$(DRIVERS_SRC))# Object files
 .PHONY: all clean run iso
 
 all: $(KERNEL)
 
-$(KERNEL): $(BOOT_OBJ) $(KERNEL_OBJ) $(LIB_OBJ)
+$(KERNEL): $(BOOT_OBJ) $(KERNEL_OBJ) $(INIT_OBJ) $(LIB_OBJ) $(DRIVERS_OBJ) 
 	@mkdir -p $(BUILD_DIR)
 	$(LD) $(LDFLAGS) $^ -o $(BUILD_DIR)/$@
 
 $(BOOT_OBJ): $(BOOT_SRC)
-	@mkdir -p $(BUILD_DIR)
+	@mkdir -p $(BUILD_DIR)/boot
 	$(ASM) $(ASMFLAGS) $< -o $@
 
 $(INIT_OBJ): $(INIT_SRC)
-	@mkdir -p $(BUILD_DIR)
+	@mkdir -p $(BUILD_DIR)/kernel
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(KERNEL_OBJ): $(KERNEL_SRC)
-	@mkdir -p $(BUILD_DIR)
+	@mkdir -p $(BUILD_DIR)/kernel
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIB_OBJ): $(LIB_SRC)
-	@mkdir -p $(BUILD_DIR)
+	@mkdir -p $(BUILD_DIR)/lib
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/drivers/%.o: src/drivers/%.c
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 iso: $(KERNEL)
