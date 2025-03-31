@@ -7,6 +7,7 @@ GRUB and UEFI compatibility, high modularity and speed. Single-file NIX-style co
 
 
 ## TODO
+```
 - boot.asm.....................|0
 - Basic makefile...............|0
 - grub.cfg.....................|1
@@ -17,7 +18,8 @@ GRUB and UEFI compatibility, high modularity and speed. Single-file NIX-style co
 - Keyboard interrupts handler).|0
 - Keyboard and time drivers....|0
 - Basic command line (bschell).|0
+```
 
-When all this is done, I will update the TODO. While the implementation is in progress, I will put it next to the completed tasks V.
+When all this is done, I will update the TODO. While the implementation is in progress, I will put 1 next to the completed tasks.
 
 Full documentation in the future. I will write it parallel with working on other things.
