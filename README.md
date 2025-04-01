@@ -105,6 +105,7 @@ make run
 | Keyboard interwupts           | 🚫 0%     | Keypress archaeology|
 | Time drivers                  | 🚫 0%     | Chronomancy         |
 | bschell                       | 🚫 0%     | Terminal therapy    |
+| branding                      | 🚧 70%    | Working on logo     |
 
 ---
 
