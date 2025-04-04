@@ -8,9 +8,9 @@ Del = rm -rf
 New = mkdir -p
 
 # Flags
-CFlags = -m32 -ffreestanding -nostdlib \
-				-nostartfiles -Wall -Wextra \
-				-I$(Headers) -fno-pie -fno-pic \
+CFlags = -m32 -ffreestanding -nostdlib -nostartfiles \
+         -Wall -Wextra -I$(Headers) -fno-pie -fno-pic \
+         -fno-stack-protector -Wno-type-limits
 
 ASMFflags = -f elf32
 LDFlags = -m elf_i386 -T src/linker.ld -nostdlib
@@ -23,12 +23,18 @@ Headers = headers
 IsoDir = isodir
 BOOT = build/boot/boot.o
 
+# Font handling
+FontDir = src/fonts
+Font = $(FontDir)/*.psf
+FontObject = $(BuildDir)/font.o
 
 # Sources & Objects
 CSources := $(shell find $(SourceDir) -type f -name '*.c')
 AssemblySrc := $(shell find $(SourceDir) -type f -name '*.asm')
 Objects := $(patsubst $(SourceDir)/%.c,$(BuildDir)/%.o,$(CSources)) \
            $(patsubst $(SourceDir)/%.asm,$(BuildDir)/%.o,$(AsemblySrc))
+Objects += $(FontObject)
+
 
 # Outputs
 KernelBin = $(BuildDir)/protos.kernel
@@ -47,7 +53,7 @@ $(Iso): $(KernelBin)
 	grub-mkrescue -o $@ $(IsoDir)
 
 # Linking binary.
-$(KernelBin): $(BOOT) $(Objects)
+$(KernelBin): $(BOOT) $(FontObject) $(Objects)
 	$(New) $(@D)
 	$(LD) $(LDFlags) -o $@ $^
 
@@ -60,6 +66,15 @@ $(BuildDir)/%.o: $(SourceDir)/%.c
 $(BuildDir)/%.o: $(SourceDir)/%.asm
 	@$(New) $(@D)
 	$(Asm) $(ASMFflags) $< -o $@
+
+# For font at src/fonts/ter-powerline-v16n.psf
+$(FontObject): $(Font)
+	objcopy -I binary -O elf32-i386 \
+		--rename-section .data=.font \
+		--redefine-sym _binary_src_fonts_ter_powerline_v16n_psf_start=_binary_font_psf_start \
+		--redefine-sym _binary_src_fonts_ter_powerline_v16n_psf_end=_binary_font_psf_end \
+		--redefine-sym _binary_src_fonts_ter_powerline_v16n_psf_size=_binary_font_psf_size \
+		$< $@
 
 bios: $(Iso)
 	qemu-system-x86_64 -cdrom $(Iso)

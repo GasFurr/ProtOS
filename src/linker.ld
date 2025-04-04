@@ -20,6 +20,10 @@ SECTIONS {
         *(.data .data.*)
     }
 
+    .font : {
+        KEEP(*(.font))
+    }
+
     .bss : {
         *(COMMON)
         *(.bss .bss.*)
