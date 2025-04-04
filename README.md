@@ -1,6 +1,10 @@
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/5f8269bf-997f-4cbc-92c1-9cda7ad919ec" alt="ProtOS Logo" width="800">
+  <img src="https://github.com/user-attachments/assets/e597ff5e-c87b-4fc6-ba28-3a1fcadbf761" alt="ProtOS Logo" width="1920">
 </p>
+
+
+
+
 
 <h3 align="center">🛠 Rethink the Wheel | 🐾 Paws-on Development | 🔵 Blueprint for Modern Computing</h3>
 
@@ -115,10 +119,13 @@ make run
 - **Phase 3**: ??? (profit)
 
 ---
-
 ## 📜 License to Tinker
 MIT Licensed - Do whatever you want, but maybe mention us if it blows up.  
 *"Rethink the Wheel"* isn't just a slogan - it's a way of life (and possibly yarn).
+
+<p align="left">
+  <img src="https://github.com/user-attachments/assets/77f70569-2c2f-444d-b800-6cd5005d2e5d" alt="ProtOS Logo" width="600">
+</p>
 
 ---
 
