@@ -161,7 +161,7 @@ make release
 
 ### 📝 Documentation
 
-- Added text.md
+- Added Text-Driver.md
 
 ### 🐉 Known issues
 
