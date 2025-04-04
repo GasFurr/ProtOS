@@ -140,8 +140,7 @@ make release
 
 ### Known issues
 
-- clear screen works really bad
-- colors absolutely dont work.
+- Nothing.
 
 ---
 
