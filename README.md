@@ -2,10 +2,6 @@
   <img src="https://github.com/user-attachments/assets/e597ff5e-c87b-4fc6-ba28-3a1fcadbf761" alt="ProtOS Logo" width="1920">
 </p>
 
-
-
-
-
 <h3 align="center">🛠 Rethink the Wheel | 🐾 Paws-on Development | 🔵 Blueprint for Modern Computing</h3>
 
 <div align="center">
@@ -110,7 +106,6 @@ make release
 
 ## 📋 Progress Report (Survival Mode)
 
-
 | Task                          | Status    | Notes                |
 |-------------------------------|-----------|----------------------|
 | boot.asm                      | 🚧 80%    | Assembler yoga       |
@@ -118,51 +113,30 @@ make release
 | grub.cfg                      | ✅ 100%   | Bootloader ready     |
 | MB2 tags header               | 🚧 40%    | Multiboot mysteries  |
 | IDT & GDT                     | 🚫 0%     | CPU gatekeeping      |
-| Graphics/text mode drivers    | 🚧 20%    | Pixel uwusability    |
+| Graphics/text mode drivers    | 🚧 40%    | Pixel uwusability    |
 | Keyboard interwupts           | 🚫 0%     | Keypress archaeology |
 | Time drivers                  | 🚫 0%     | Chronomancy          |
 | bschell                       | 🚫 0%     | Terminal therapy     |
 | Branding                      | ✅ 100%   | No longer disgusting |
 
-
 ---
 
-## 💥 ALPHA 0.1.5 CHANGELOG
+## 💥 ALPHA 0.1.6 CHANGELOG
 
-  Celebrating first real hardware run!
-  Kernel successfully displayed test figures on the screen!
+  Just works. Updated testing pattern.
 
 ### 🚀 New features
 
-- Added graphic driver and graphic.h header with functions:
-
-```c
-   clear_screen(color); // it fills screen with the color parameter
-  // color format is: 0xRRGGBB
-    draw_pixel(coord x, coord y, color);
-    draw_rect(coord x, coord y, width, height, color, fill);
-  // coord x & y are top-left corner coordinates. 
-  // "fill" parameter: 0 = outline; 1 = filled;
-    draw_line(coord x0, coord y0, coord x1, coord y1, color);
-  // Drawing line using Bresenham's algorithm
-  // x0 and y0 start coords, x1 and y1 end coords. And color.
-```
-
-- Working boot.asm (Kernel entry is KInit function)
-- Filled Multiboot2 tags header. (for now only framebuffer.)
--
+- Added line thickness option to draw_line().
+- Added basic colors macros: RED, GREEN, BLUE, WHITE, BLACK, PROTOS_BLACK, PROTOS_BLUE.
 
 ### 🔧 Fixed
 
-- Fixed makefile to make boot.asm first in linker.
-- Fixed grub.cfg: added insmod all_video.
+- Fixed all known issues. (colors, clear_screen)
 
 ### 📝 Documentation
 
-- Added graphics driver documentation
-- Added build documentation
-- Added boot process documentation
-- Commented multiboot2 tags
+- Nothing new.
 
 ### Known issues
 
@@ -178,6 +152,7 @@ make release
 - **Phase 3**: ??? (profit)
 
 ---
+
 ## 📜 License to Tinker
 
 MIT Licensed - Do whatever you want, but maybe mention us if it blows up.  

@@ -3,6 +3,14 @@
 #include "mb2tags.h"
 #include <stdint.h>
 
+#define PROTOS_BLACK 0x042F40
+#define PROTOS_BLUE 0x2499C5
+#define BLACK 0x000000
+#define WHITE 0xFFFFFF
+#define RED 0xFF0000
+#define GREEN 0x00FF00
+#define BLUE 0x0000FF
+
 // Forward-declare the struct (no redefinition)
 
 /**
@@ -50,5 +58,7 @@ void draw_rect(uint32_t x, uint32_t y, uint32_t width, uint32_t height,
  * @param x1    End X-coordinate
  * @param y1    End Y-coordinate
  * @param color Line color (0xRRGGBB)
+ * @param thickness Line thickness.
  */
-void draw_line(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t color);
+void draw_line(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t color,
+               int thickness);

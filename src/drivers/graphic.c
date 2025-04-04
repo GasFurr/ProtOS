@@ -2,6 +2,7 @@
 // graphics.c - Framebuffer Graphics Implementation
 #include "graphic.h"
 #include "mb2tags.h" // Use the updated header
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -18,19 +19,16 @@ static inline int32_t iabs(int32_t x) { return x < 0 ? -x : x; }
  * @return Native color format, 0 if unsupported mode
  */
 static uint32_t convert_color(uint32_t rgb) {
-  if (!fb || fb->framebuffer_type != FB_TYPE_DIRECTRGB) {
-    return 0;
-  }
+  // Extract components from 24-bit RGB
+  const uint8_t r = (rgb >> 16) & 0xFF; // Red: 0xFF0000 -> 0xFF
+  const uint8_t g = (rgb >> 8) & 0xFF;  // Green: 0x00FF00 -> 0xFF
+  const uint8_t b = rgb & 0xFF;         // Blue: 0x0000FF -> 0xFF
 
-  // Extract color components
-  const uint8_t red = (rgb >> 16) & 0xFF;
-  const uint8_t green = (rgb >> 8) & 0xFF;
-  const uint8_t blue = rgb & 0xFF;
-
-  // Construct native color value
-  return (red << fb->direct_rgb.red_position) |
-         (green << fb->direct_rgb.green_position) |
-         (blue << fb->direct_rgb.blue_position);
+  // For ARGB/XRGB format (most common)
+  return 0xFF000000 | // Alpha channel (opaque)
+         (r << 16) |  // Red in bits 16-23
+         (g << 8) |   // Green in bits 8-15
+         b;           // Blue in bits 0-7
 }
 
 /**
@@ -71,12 +69,15 @@ void clear_screen(uint32_t color) {
   if (!fb)
     return;
 
+  uint8_t *fb_mem = (uint8_t *)(uintptr_t)fb->framebuffer_addr;
   const uint32_t native_color = convert_color(color);
-  uint32_t *fb_mem = (uint32_t *)(uintptr_t)fb->framebuffer_addr;
-  const uint32_t pixel_count = fb->framebuffer_width * fb->framebuffer_height;
+  const uint32_t bytes_per_pixel = 4;
 
-  for (uint32_t i = 0; i < pixel_count; i++) {
-    fb_mem[i] = native_color;
+  for (uint32_t y = 0; y < fb->framebuffer_height; y++) {
+    uint32_t *row = (uint32_t *)(fb_mem + y * fb->framebuffer_pitch);
+    for (uint32_t x = 0; x < fb->framebuffer_width; x++) {
+      row[x] = native_color;
+    }
   }
 }
 
@@ -112,17 +113,25 @@ void draw_rect(uint32_t x, uint32_t y, uint32_t width, uint32_t height,
 }
 
 /**
- * Draw line using Bresenham's algorithm
+ * Draw line using Bresenham's algorithm with variable thickness
  * @param x0 Start X
  * @param y0 Start Y
  * @param x1 End X
  * @param y1 End Y
  * @param color 24-bit RGB color
+ * @param thickness Line thickness in pixels (minimum 1)
  */
-void draw_line(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t color) {
-  if (!fb)
+void draw_line(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t color,
+               int thickness) {
+  if (!fb || thickness < 1)
     return;
 
+  // Calculate line direction properties
+  int32_t abs_dx = iabs(x1 - x0);
+  int32_t abs_dy = iabs(y1 - y0);
+  bool is_steep = abs_dy > abs_dx; // Determine primary axis
+
+  // Bresenham algorithm setup
   int32_t dx = iabs(x1 - x0);
   int32_t dy = -iabs(y1 - y0);
   int32_t sx = x0 < x1 ? 1 : -1;
@@ -130,14 +139,39 @@ void draw_line(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t color) {
   int32_t err = dx + dy;
 
   while (1) {
+    // Only draw if coordinates are within bounds
     if (x0 >= 0 && (uint32_t)x0 < fb->framebuffer_width && y0 >= 0 &&
         (uint32_t)y0 < fb->framebuffer_height) {
-      draw_pixel(x0, y0, color);
+
+      // Calculate thickness offsets
+      int start_offset = (1 - thickness) / 2;
+      int end_offset = thickness / 2;
+
+      // Draw perpendicular to the primary axis
+      if (is_steep) {
+        // Horizontal spread for steep lines (vertical-dominant)
+        for (int i = start_offset; i <= end_offset; ++i) {
+          int32_t current_x = x0 + i;
+          if (current_x >= 0 && (uint32_t)current_x < fb->framebuffer_width) {
+            draw_pixel(current_x, y0, color);
+          }
+        }
+      } else {
+        // Vertical spread for shallow lines (horizontal-dominant)
+        for (int i = start_offset; i <= end_offset; ++i) {
+          int32_t current_y = y0 + i;
+          if (current_y >= 0 && (uint32_t)current_y < fb->framebuffer_height) {
+            draw_pixel(x0, current_y, color);
+          }
+        }
+      }
     }
 
+    // Exit condition: reached end point
     if (x0 == x1 && y0 == y1)
       break;
 
+    // Bresenham error adjustment
     int32_t e2 = 2 * err;
     if (e2 >= dy) {
       err += dy;

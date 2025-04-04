@@ -15,16 +15,14 @@ void KInit(uint32_t magic, uint32_t *mb2_info) {
   graphics_init(fb_tag);
 
   // Basic framebuffer test
-  clear_screen(0x000000); // Black background
-
-  // Red rectangle (100x50 pixels at position 50,50)
-  draw_rect(50, 50, 100, 50, 0xFF0000, 1);
-
-  // Green diagonal line from top-left to bottom-right
-  draw_line(0, 0, fb_tag->framebuffer_width - 1, fb_tag->framebuffer_height - 1,
-            0x00FF00);
-
-  // Halt indefinitely
+  clear_screen(PROTOS_BLACK); // Protos-black background
+  // Test pattern
+  draw_rect(10, 10, 100, 100, RED, 1);    // Red
+  draw_rect(120, 10, 100, 100, GREEN, 1); // Green
+  draw_rect(230, 10, 100, 100, BLUE, 1);  // Blue
+  draw_rect(340, 10, 100, 100, WHITE, 1); // White
+  // Protos-Blue line
+  draw_line(0, 125, fb_tag->framebuffer_width - 1, 125, PROTOS_BLUE, 10);
   while (1)
     __asm__("hlt");
 }
