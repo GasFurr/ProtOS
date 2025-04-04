@@ -29,11 +29,11 @@ Objects := $(patsubst $(SourceDir)/%.c,$(BuildDir)/%.o,$(CSources)) \
 
 # Outputs
 KernelBin = $(BuildDir)/protos.kernel
-Iso = release/ProtOS.iso
+Iso = $(BuildDir)/ProtOS.iso
 Release = release
 
 # Commands
-.PHONY: all clean run debug release
+.PHONY: all clean run debug bios release
 
 all: $(KernelBin)
 # ISO creation.
@@ -57,11 +57,34 @@ $(BuildDir)/%.o: $(SourceDir)/%.c
 $(BuildDir)/%.o: $(SourceDir)/%.asm
 	@$(New) $(@D)
 	$(Asm) $(ASMFflags) $< -o $@
- 
-run: $(Iso)
+
+bios: $(Iso)
 	qemu-system-x86_64 -cdrom $(Iso)
 
+debug: $(Iso)
+	qemu-system-x86_64 \
+		-machine q35,accel=kvm \
+		-cpu host \
+		-drive if=pflash,format=raw,readonly=on,file=firmware/OVMF_CODE.4m.fd \
+		-drive id=cd,file=$(Iso),format=raw,if=none,media=cdrom \
+		-device ide-cd,drive=cd \
+		-m 2G \
+		-serial stdio \
+		-no-reboot \
+		-debugcon file:uefi_debug.log \
+		-global isa-debugcon.iobase=0x402
+
+run: $(Iso)
+	qemu-system-x86_64 \
+		-machine q35,accel=kvm \
+		-cpu host \
+		-drive if=pflash,format=raw,readonly=on,file=firmware/OVMF_CODE.4m.fd \
+		-drive id=cd,file=$(Iso),format=raw,if=none,media=cdrom \
+		-device ide-cd,drive=cd \
+		-m 2G \
+
 release: $(Iso)
+	cp $(Iso) $(Release)
 
 clean:
 	$(Del) $(BuildDir) $(IsoDir) $(Iso) $(Release)/*
