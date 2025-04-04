@@ -87,6 +87,12 @@ make all
 
 # For brave souls only:
 make run
+
+# To bring tears
+make debug
+
+# To just build the iso
+make release 
 ```
 
 ---
