@@ -58,7 +58,9 @@ ProtOS/
 ```
 
 ## 🛠️ Building the Beast
+
 ### Summon dependencies (choose your distro flavor)
+
 <details>
 <summary>Arch/Manjaro (yay required)</summary>
 
@@ -66,6 +68,7 @@ ProtOS/
 # Summon compiler dragons (i use arch btw)
 yay -S grub nasm gcc binutils qemu-full edk2-ovmf
 ```
+
 </details>
 
 <details>
@@ -75,8 +78,8 @@ yay -S grub nasm gcc binutils qemu-full edk2-ovmf
 # For our Debian/Ubuntu friends:
 sudo apt install grub-pc nasm gcc binutils qemu-system-x86 ovmf
 ```
-</details>
 
+</details>
 
 ```bash
 # Clone with surgical precision
@@ -99,7 +102,7 @@ make release
 
 > **🐉 Dragon's Note**  
 > QEMU testing requires OVMF firmware. We don't ship it for the same reason
-> dragons don't share gold: Lawyers. Get yours from 
+> dragons don't share gold: Lawyers. Get yours from
 > [EDK2](https://github.com/tianocore/edk2) or `sudo pacman -S edk2-ovmf`
 > then copy `OVMF_CODE.fd` to firmware folder. No hoard, no boot!
 
@@ -107,28 +110,71 @@ make release
 
 ## 📋 Progress Report (Survival Mode)
 
-| Task                          | Status    | Notes               |
+
+| Task                          | Status    | Notes                |
 |-------------------------------|-----------|----------------------|
-| boot.asm                      | 🚫 0%     | Assembler yoga       |
+| boot.asm                      | 🚧 80%    | Assembler yoga       |
 | Basic makefile                | ✅ 100%   | Builds without fire  |
 | grub.cfg                      | ✅ 100%   | Bootloader ready     |
-| MB2 tags parser               | 🚫 0%     | Multiboot mysteries  |
+| MB2 tags header               | 🚧 40%    | Multiboot mysteries  |
 | IDT & GDT                     | 🚫 0%     | CPU gatekeeping      |
-| Graphics/text mode drivers    | 🚫 0%     | Pixel uwusability    |
+| Graphics/text mode drivers    | 🚧 20%    | Pixel uwusability    |
 | Keyboard interwupts           | 🚫 0%     | Keypress archaeology |
 | Time drivers                  | 🚫 0%     | Chronomancy          |
 | bschell                       | 🚫 0%     | Terminal therapy     |
 | Branding                      | ✅ 100%   | No longer disgusting |
 
+
+---
+
+## 💥 ALPHA 0.1.5 CHANGELOG
+
+  Celebrating first real hardware run!
+  Kernel successfully displayed test figures on the screen!
+
+### 🚀 New features
+
+- Added graphic driver and graphic.h header with functions:
+
+```text
+  // color format is: 0xRRGGBB
+  draw_pixel(coord x, coord y, color)
+  clear_screen(color) // it fills screen with the color parameter
+  draw_rect(coord x, coord y, width, height, color, fill)
+  // coord x & y are top-left corner coordinates. 
+  // "fill" parameter: 0 = outline; 1 = filled;
+  draw_line(coord x0, coord y0, coord x1, coord y1, color)
+  // Drawing line using Bresenham's algorithm
+  // x0 and y0 start coords, x1 and y1 end coords. And color.
+```
+
+- Working boot.asm (Kernel entry is KInit function)
+- Filled Multiboot2 tags header. (for now only framebuffer.)
+-
+
+### 🔧 Fixed
+
+- Fixed makefile to make boot.asm first in linker.
+- Fixed grub.cfg: added insmod all_video.
+
+### 📝 Documentation
+
+- Added graphics driver documentation
+- Added build documentation
+- Added boot process documentation
+- Commented multiboot2 tags
+
 ---
 
 ## 🔮 Crystal Ball (Roadmap)
+
 - **Phase 1**: Make computer go beep (hardware communication)
 - **Phase 2**: Pretend we're UNIX (basic shell operations)
 - **Phase 3**: ??? (profit)
 
 ---
 ## 📜 License to Tinker
+
 MIT Licensed - Do whatever you want, but maybe mention us if it blows up.  
 *"Rethink the Wheel"* isn't just a slogan - it's a way of life (and possibly yarn).
 
@@ -141,6 +187,7 @@ MIT Licensed - Do whatever you want, but maybe mention us if it blows up.
 <div align="center">
   
 ## 📬 Contact
+
 Got questions, suggestions, or dragon taming tips?  
 📧 [gasfurri@gmail.com](mailto:gasfurri@gmail.com)
   
@@ -156,5 +203,5 @@ Got questions, suggestions, or dragon taming tips?
  > ^ <  /* Compiles with love */
 ```
 
-"UNIX is user-friendly. It’s just selective about who its friends are" 
+"UNIX is user-friendly. It’s just selective about who its friends are"
 (carved on a kernel developer's tombstone)
