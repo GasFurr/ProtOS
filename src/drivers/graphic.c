@@ -6,10 +6,9 @@
 #include <stdint.h>
 
 // Internal state
-static struct multiboot_tag_framebuffer *fb = NULL;
-static uint32_t *fb_mem = NULL;
-static uint32_t fb_pitch = 0;
-static uint32_t native_color_cache = 0;
+struct multiboot_tag_framebuffer *fb = NULL;
+uint32_t *fb_mem = NULL;
+uint32_t fb_pitch = 0;
 
 // Fast absolute value
 #define iabs(x) ((x) < 0 ? -(x) : (x))
@@ -45,6 +44,18 @@ void graphics_init(struct multiboot_tag_framebuffer *fb_tag) {
 static inline void bulk_write(uint32_t *dest, uint32_t color, size_t count) {
   while (count--)
     *dest++ = color;
+}
+
+void draw_pixel(uint32_t x, uint32_t y, uint32_t color) {
+  if (!fb || x >= fb->framebuffer_width || y >= fb->framebuffer_height)
+    return;
+
+  // Calculate pixel position
+  uint8_t *pixel = (uint8_t *)(uintptr_t)fb->framebuffer_addr +
+                   y * fb->framebuffer_pitch + x * (fb->framebuffer_bpp / 8);
+
+  // Write color value
+  *(uint32_t *)pixel = convert_color(color);
 }
 
 /**
