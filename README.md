@@ -121,18 +121,21 @@ make release
 
 ---
 
-## 💥 ALPHA 0.1.6 CHANGELOG
+## 💥 ALPHA 0.1.7 CHANGELOG
 
   Just works. Updated testing pattern.
 
 ### 🚀 New features
 
-- Added line thickness option to draw_line().
-- Added basic colors macros: RED, GREEN, BLUE, WHITE, BLACK, PROTOS_BLACK, PROTOS_BLUE.
+- Nothing
+
+### ⚡ Optimization
+
+- Optimized graphic code.
 
 ### 🔧 Fixed
 
-- Fixed all known issues. (colors, clear_screen)
+- Fixed all known issues.
 
 ### 📝 Documentation
 

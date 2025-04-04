@@ -3,6 +3,12 @@
 #include "mb2tags.h"
 #include <stdint.h>
 
+#define SWAP(a, b)                                                             \
+  do {                                                                         \
+    typeof(a) temp = a;                                                        \
+    a = b;                                                                     \
+    b = temp;                                                                  \
+  } while (0)
 #define PROTOS_BLACK 0x042F40
 #define PROTOS_BLUE 0x2499C5
 #define BLACK 0x000000
