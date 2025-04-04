@@ -10,7 +10,8 @@ New = mkdir -p
 # Flags
 CFlags = -m32 -ffreestanding -nostdlib \
 				-nostartfiles -Wall -Wextra \
-				-I$(Headers)
+				-I$(Headers) -fno-pie -fno-pic \
+
 ASMFflags = -f elf32
 LDFlags = -m elf_i386 -T src/linker.ld -nostdlib
 
@@ -20,6 +21,8 @@ BuildDir = build
 GrubConf = grub/grub.cfg
 Headers = headers
 IsoDir = isodir
+BOOT = build/boot/boot.o
+
 
 # Sources & Objects
 CSources := $(shell find $(SourceDir) -type f -name '*.c')
@@ -44,7 +47,7 @@ $(Iso): $(KernelBin)
 	grub-mkrescue -o $@ $(IsoDir)
 
 # Linking binary.
-$(KernelBin): $(Objects)
+$(KernelBin): $(BOOT) $(Objects)
 	$(New) $(@D)
 	$(LD) $(LDFlags) -o $@ $^
 
@@ -82,6 +85,7 @@ run: $(Iso)
 		-drive id=cd,file=$(Iso),format=raw,if=none,media=cdrom \
 		-device ide-cd,drive=cd \
 		-m 2G \
+		-serial stdio \
 
 release: $(Iso)
 	cp $(Iso) $(Release)
