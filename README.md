@@ -12,7 +12,7 @@
   
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
   ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/GasFurr/ProtOS)
-  ![Version](https://img.shields.io/badge/Version-0.1.3--alpha-red)
+  ![Version](https://img.shields.io/badge/Version-0.1.5--alpha-red)
   [![Build](https://img.shields.io/badge/Build-Passing-brightgreen)](https://github.com/GasFurr/ProtOS/actions)
 
 </div>
