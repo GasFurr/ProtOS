@@ -36,7 +36,7 @@
 
 **🔭 Future-First**
 
-*Why walk when you can teleport? UEFI-only, GRUB-powered foundation*
+*Why walk when you can teleport? No legacy baggage, robust GRUB-powered foundation*
 
 </div>
 
@@ -136,14 +136,14 @@ make release
 
 - Added graphic driver and graphic.h header with functions:
 
-```text
+```c
+   clear_screen(color); // it fills screen with the color parameter
   // color format is: 0xRRGGBB
-  draw_pixel(coord x, coord y, color)
-  clear_screen(color) // it fills screen with the color parameter
-  draw_rect(coord x, coord y, width, height, color, fill)
+    draw_pixel(coord x, coord y, color);
+    draw_rect(coord x, coord y, width, height, color, fill);
   // coord x & y are top-left corner coordinates. 
   // "fill" parameter: 0 = outline; 1 = filled;
-  draw_line(coord x0, coord y0, coord x1, coord y1, color)
+    draw_line(coord x0, coord y0, coord x1, coord y1, color);
   // Drawing line using Bresenham's algorithm
   // x0 and y0 start coords, x1 and y1 end coords. And color.
 ```
