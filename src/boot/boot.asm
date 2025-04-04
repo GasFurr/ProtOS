@@ -42,9 +42,9 @@ dw 0x1
 ;   Size 20 bytes (8 header + 3*4)
 dd 20
 ;   Width: 0 - Just let GRUB choose.
-dd 0 
+dd 1920 
 ;   Height:
-dd 0
+dd 1080
 ;   Depth: 32 bits per pixel
 dd 32
 
