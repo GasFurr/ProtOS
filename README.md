@@ -138,6 +138,10 @@ make release
 
 - Nothing new.
 
+### 🐉 Known issues
+
+- Nothing.
+
 ---
 
 ## 🔮 Crystal Ball (Roadmap)
