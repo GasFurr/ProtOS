@@ -138,7 +138,7 @@ make release
 
 - Nothing new.
 
-### Known issues
+### 🐉 Known issues
 
 - Nothing.
 
