@@ -27,12 +27,15 @@
 <div align="center">
 
 **⚡ Fast & Fresh**
+
 *Modern hardware deserves modern software - no legacy baggage allowed*
 
 **🧩 Modular by Design**
+
 *Just snap components together, all in one system configuration file.*
 
 **🔭 Future-First**
+
 *Why walk when you can teleport? UEFI-only, GRUB-powered foundation*
 
 </div>
