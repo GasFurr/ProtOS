@@ -2,13 +2,17 @@
   <img src="https://github.com/user-attachments/assets/e597ff5e-c87b-4fc6-ba28-3a1fcadbf761" alt="ProtOS Logo" width="1920">
 </p>
 
+
+
+
+
 <h3 align="center">🛠 Rethink the Wheel | 🐾 Paws-on Development | 🔵 Blueprint for Modern Computing</h3>
 
 <div align="center">
   
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
   ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/GasFurr/ProtOS)
-  ![Version](https://img.shields.io/badge/Version-0.1.3--alpha-red)
+  ![Version](https://img.shields.io/badge/Version-0.1.5--alpha-red)
   [![Build](https://img.shields.io/badge/Build-Passing-brightgreen)](https://github.com/GasFurr/ProtOS/actions)
 
 </div>
@@ -23,12 +27,15 @@
 <div align="center">
 
 **⚡ Fast & Fresh**
+
 *Modern hardware deserves modern software - no legacy baggage allowed*
 
 **🧩 Modular by Design**
+
 *Just snap components together, all in one system configuration file.*
 
 **🔭 Future-First**
+
 *Why walk when you can teleport? UEFI-only, GRUB-powered foundation*
 
 </div>
@@ -83,6 +90,12 @@ make all
 
 # For brave souls only:
 make run
+
+# To bring tears
+make debug
+
+# To just build the iso
+make release 
 ```
 
 ---
@@ -97,6 +110,7 @@ make run
 
 ## 📋 Progress Report (Survival Mode)
 
+
 | Task                          | Status    | Notes                |
 |-------------------------------|-----------|----------------------|
 | boot.asm                      | 🚧 80%    | Assembler yoga       |
@@ -109,6 +123,7 @@ make run
 | Time drivers                  | 🚫 0%     | Chronomancy          |
 | bschell                       | 🚫 0%     | Terminal therapy     |
 | Branding                      | ✅ 100%   | No longer disgusting |
+
 
 ---
 
@@ -149,8 +164,6 @@ make run
 - Added boot process documentation
 - Commented multiboot2 tags
 
-###
-
 ---
 
 ## 🔮 Crystal Ball (Roadmap)
@@ -160,7 +173,6 @@ make run
 - **Phase 3**: ??? (profit)
 
 ---
-
 ## 📜 License to Tinker
 
 MIT Licensed - Do whatever you want, but maybe mention us if it blows up.  
