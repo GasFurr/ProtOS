@@ -164,6 +164,11 @@ make release
 - Added boot process documentation
 - Commented multiboot2 tags
 
+### Known issues
+
+- clear screen works really bad
+- colors absolutely dont work.
+
 ---
 
 ## 🔮 Crystal Ball (Roadmap)
