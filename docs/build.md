@@ -1,7 +1,6 @@
 # Building ProtOS
 
 **ProtOS Build Documentation**  
-A simple guide to build and run your OS project using the provided Makefile.
 
 ---
 
