@@ -99,17 +99,17 @@ make run
 ## 📋 Progress Report (Survival Mode)
 
 | Task                          | Status    | Notes               |
-|-------------------------------|-----------|---------------------|
-| boot.asm                      | 🚫 0%     | Assembler yoga      |
-| Basic makefile                | ✅ 100%   | Builds without fire |
-| grub.cfg                      | ✅ 100%   | Bootloader ready    |
-| MB2 tags parser               | 🚫 0%     | Multiboot mysteries |
-| IDT & GDT                     | 🚫 0%     | CPU gatekeeping     |
-| Graphics/text mode drivers    | 🚫 0%     | Pixel uwusability   |
-| Keyboard interwupts           | 🚫 0%     | Keypress archaeology|
-| Time drivers                  | 🚫 0%     | Chronomancy         |
-| bschell                       | 🚫 0%     | Terminal therapy    |
-| branding                      | 🚧 70%    | Working on logo     |
+|-------------------------------|-----------|----------------------|
+| boot.asm                      | 🚫 0%     | Assembler yoga       |
+| Basic makefile                | ✅ 100%   | Builds without fire  |
+| grub.cfg                      | ✅ 100%   | Bootloader ready     |
+| MB2 tags parser               | 🚫 0%     | Multiboot mysteries  |
+| IDT & GDT                     | 🚫 0%     | CPU gatekeeping      |
+| Graphics/text mode drivers    | 🚫 0%     | Pixel uwusability    |
+| Keyboard interwupts           | 🚫 0%     | Keypress archaeology |
+| Time drivers                  | 🚫 0%     | Chronomancy          |
+| bschell                       | 🚫 0%     | Terminal therapy     |
+| Branding                      | ✅ 100%   | No longer disgusting |
 
 ---
 
