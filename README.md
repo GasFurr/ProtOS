@@ -136,7 +136,7 @@ make release
 
 - Added graphic driver and graphic.h header with functions:
 
-```text
+```c
   // color format is: 0xRRGGBB
   draw_pixel(coord x, coord y, color)
   clear_screen(color) // it fills screen with the color parameter
