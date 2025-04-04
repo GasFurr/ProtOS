@@ -23,7 +23,7 @@ void KInit(uint32_t magic, uint32_t *mb2_info) {
   init_font();
   set_cursor_pos(0, 0);
   set_text_color(PROTOS_BLUE, BLACK);
-  print_text("Test pattern:");
+  KOutput("Test pattern:");
   // Basic framebuffer test
   // Test pattern
   draw_rect(100, 40, 100, 100, RED, 1);   // Red
@@ -36,8 +36,8 @@ void KInit(uint32_t magic, uint32_t *mb2_info) {
   // Draw debug grid
 
   set_cursor_pos(0, 5);
-  print_text(" ProtOS-Alpha 0.1.8\n");
-  print_text(" Initialization Finished!\n");
+  KOutput(" ProtOS-Alpha 0.1.8\n");
+  KOutput(" Initialization Finished!\n");
 
   while (1)
     __asm__("hlt");

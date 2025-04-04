@@ -14,6 +14,6 @@ void init_font(void);
 void set_text_color(uint32_t fg, uint32_t bg);
 void set_cursor_pos(uint32_t x, uint32_t y);
 void draw_char(unsigned char c);
-void print_text(const char *str);
+void KOutput(const char *str);
 
 #endif
