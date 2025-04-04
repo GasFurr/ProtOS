@@ -36,7 +36,7 @@
 
 **🔭 Future-First**
 
-*Why walk when you can teleport? UEFI-only, GRUB-powered foundation*
+*Why walk when you can teleport? No legacy baggage, robust GRUB-powered foundation*
 
 </div>
 
