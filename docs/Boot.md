@@ -1,9 +1,11 @@
 ### **Kernel Boot Process Documentation**  
-A minimal, step-by-step explanation of how your kernel boots from power-on to graphical/text output:
+
+A minimal, step-by-step explanation of how ProtOS kernel boots from power-on to graphical/text output:
 
 ---
 
 ### **1. Power-On & Firmware Initialization**
+
 - **BIOS/UEFI** activates hardware, performs POST checks  
 - **Boot Device Selection**: BIOS looks for bootable devices in order (HDD, USB, CD, etc.)  
 - **Bootloader Loading**: BIOS transfers control to the bootloader (GRUB)  
@@ -11,6 +13,7 @@ A minimal, step-by-step explanation of how your kernel boots from power-on to gr
 ---
 
 ### **2. GRUB Bootloader Phase**
+
 - **Stage 1**: GRUB MBR loads core image  
 - **Stage 2**: GRUB reads configuration (`grub.cfg`)  
 - **Multiboot2 Header Detection**: GRUB scans kernel binary for header in first 32KB  
@@ -29,6 +32,7 @@ section .multiboot_header
 ---
 
 ### **3. Kernel Entry & Setup**
+
 - **Control Transfer**: GRUB jumps to kernel entry point (`KInit`)  
 - **Basic CPU State**: Protected mode enabled, interrupts disabled  
 - **Stack Setup**: Initialize stack pointer for C code  
@@ -42,10 +46,10 @@ void KInit(uint32_t magic, uint32_t *mb2_info) {
 }
 ```
 
-
 ---
 
 ### **Boot Flow Diagram**  
+
 ```
 [Power On] → [BIOS/UEFI] → [GRUB] → [Kernel Header Check]  
                ↓                      ↓  
@@ -57,4 +61,3 @@ void KInit(uint32_t magic, uint32_t *mb2_info) {
                                   ↓  
                           [Main Kernel Loop]  
 ```
-

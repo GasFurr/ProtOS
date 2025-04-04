@@ -14,5 +14,8 @@ release/
 *.o
 *.elf
 
+# Result kernel files
+isodir/
+
 # Ignore logs
 *.log
