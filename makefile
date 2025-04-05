@@ -81,7 +81,7 @@ bios: $(Iso)
 
 debug: $(Iso)
 	qemu-system-x86_64 \
-		-machine q35,accel=kvm \
+		-machine q35,accel=kvm\
 		-cpu host \
 		-drive if=pflash,format=raw,readonly=on,file=firmware/OVMF_CODE.4m.fd \
 		-drive id=cd,file=$(Iso),format=raw,if=none,media=cdrom \
@@ -89,8 +89,8 @@ debug: $(Iso)
 		-m 2G \
 		-serial stdio \
 		-no-reboot \
-		-debugcon file:uefi_debug.log \
-		-global isa-debugcon.iobase=0x402
+		-D debug.log \
+		-d guest_errors,cpu_reset
 
 run: $(Iso)
 	qemu-system-x86_64 \

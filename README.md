@@ -121,22 +121,14 @@ make release
 
 ---
 
-## 💥 ALPHA 0.1.9 CHANGELOG
+## 💥 ALPHA 0.1.9.1 CHANGELOG
 
-  Just works. Serial output implementation!
+  Just works. Little patch
 
 ### 🚀 New features
 
-- Serial output for logging!
-
-```c
-  serial_init();
-  // Initialization
-  serial_putc('char');
-  // Outputs character to serial port
-  serial_puts("string");
-  // Outputs string to serial port
-```
+- Better logging.
+- 64KB stack
 
 ### ⚡ Optimization
 
@@ -144,15 +136,12 @@ make release
 
 ### 🔧 Fixed
 
-- No changes
+- make debug just not worked.
+- Now it works.
 
 ### 📝 Documentation
 
-<<<<<<< HEAD
-- Added Serial-Output.md
-=======
-- Added Text-Driver.md
->>>>>>> 08b07930656f3794e50771b79ff9c85c4fed7ca9
+- No changes
 
 ### 🐉 Known issues
 

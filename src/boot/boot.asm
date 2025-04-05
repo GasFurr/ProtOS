@@ -92,5 +92,5 @@ _start:
 section .bss
 align 16
 stack_bottom:
-  resb 16384 ; 16KB stack.
+  resb 65536 ; 64KB stack.
 stack_top:
