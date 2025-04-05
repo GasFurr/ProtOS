@@ -114,7 +114,7 @@ make release
 | MB2 tags header               | 🚧 40%    | Multiboot mysteries  |
 | IDT & GDT                     | 🚫 0%     | CPU gatekeeping      |
 | Graphics/text mode drivers    | 🚧 80%    | Pixel uwusability    |
-| Keyboard interwupts           | 🚧 45%     | Keypress archaeology |
+| Keyboard interwupts           | 🚫 0%     | Keypress archaeology |
 | Time drivers                  | 🚫 0%     | Chronomancy          |
 | bschell                       | 🚫 0%     | Terminal therapy     |
 | Branding                      | ✅ 100%   | No longer disgusting |
