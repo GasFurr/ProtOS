@@ -91,7 +91,10 @@ make run
 make debug
 
 # To just build the iso
-make release 
+make release
+
+# To boot with bios
+make bios
 ```
 
 ---
@@ -108,44 +111,73 @@ make release
 
 | Task                          | Status    | Notes                |
 |-------------------------------|-----------|----------------------|
-| boot.asm                      | 🚧 80%    | Assembler yoga       |
+| boot.asm                      | 🚫 40%    | Assembler yoga       |
 | Basic makefile                | ✅ 100%   | Builds without fire  |
 | grub.cfg                      | ✅ 100%   | Bootloader ready     |
 | MB2 tags header               | 🚧 40%    | Multiboot mysteries  |
-| IDT & GDT                     | 🚫 0%     | CPU gatekeeping      |
-| Graphics/text mode drivers    | 🚧 80%    | Pixel uwusability    |
+| IDT & GDT                     | ✅ 85%    | CPU gatekeeping      |
+| Graphics/text mode drivers    | 🚧 83%    | Pixel uwusability    |
 | Keyboard interwupts           | 🚫 0%     | Keypress archaeology |
 | Time drivers                  | 🚫 0%     | Chronomancy          |
 | bschell                       | 🚫 0%     | Terminal therapy     |
 | Branding                      | ✅ 100%   | No longer disgusting |
-
+(Yeah, i think 85% is fine for idt/gdt and exception handler.)
 ---
 
-## 💥 ALPHA 0.1.9.1 CHANGELOG
-
-  Just works. Little patch
+## 💥 ALPHA 0.2.0 CHANGELOG  
+  Foundation for Protected Mode! CPU features unlocked.
 
 ### 🚀 New features
 
-- Better logging.
-- 64KB stack
+- **Global Descriptor Table (GDT) Implementation**  
+```c
+void gdt_init(void);
+// Initializes core CPU segmentation with:
+// - Null descriptor
+// - 4GB Code segment (ring 0)
+// - 4GB Data segment (ring 0)
+```
+- **Interrupt Descriptor Table (IDT) System**  
+```c
+void idt_init(void); 
+// Configures 256 interrupt gates with:
+// - CPU exception handlers (0-31)
+// - Custom ISR routing to C handlers
+// - Full privilege separation
+```
+- **Advanced Exception Handling**  
+```c
+void isr_handler(struct registers *regs);
+// Detailed exception reporting:
+// - Human-readable error names
+// - Full register dump
+// - Faulting instruction pointer
+// - Error codes and CR2 value (page faults)
+```
+- **Serial Hex Debugging**  
+```c
+void serial_puthex(uint32_t val);
+// Outputs 32-bit values as padded hexadecimal
+// Example: 0x1A3F → "0x00001A3F"
+```
 
 ### ⚡ Optimization
-
-- No changes
+- No new optimizations
 
 ### 🔧 Fixed
-
-- make debug just not worked.
-- Now it works.
+- **Magic number validation** in early boot sequence
+- Stack alignment issues causing random crashes
+- GDT descriptor initialization race condition
 
 ### 📝 Documentation
-
-- No changes
+- Added `cpu.md` with GDT/IDT architecture details
+- Updated `serial.md` with hex output documentation
+- Exception codes reference in `exceptions.md`
 
 ### 🐉 Known issues
-
-- No changes
+- Hardware interrupts not yet implemented (keyboard/PIC)
+- No recovery mechanism for critical exceptions
+- Double faults may cause unreported reboots
 
 ---
 

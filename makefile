@@ -90,7 +90,7 @@ debug: $(Iso)
 		-serial stdio \
 		-no-reboot \
 		-D debug.log \
-		-d guest_errors,cpu_reset
+		-d int,cpu_reset
 
 run: $(Iso)
 	qemu-system-x86_64 \

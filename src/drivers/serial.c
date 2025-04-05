@@ -1,6 +1,7 @@
 // serial.c - Serial port implementation
 #include "serial.h"
 #include <stddef.h>
+#include <stdint.h>
 
 #define COM1_PORT 0x3F8
 
@@ -21,6 +22,7 @@ void serial_init() {
   outb(COM1_PORT + 1, 0x00);
   outb(COM1_PORT + 3, 0x03); // 8 bits, no parity, one stop bit
   outb(COM1_PORT + 2, 0xC7); // Enable FIFO, clear them, 14-byte threshold
+  serial_puts("Serial Output initialized.\n");
 }
 
 void serial_putc(char c) {
@@ -31,6 +33,19 @@ void serial_putc(char c) {
   // Add CR when we get LF
   if (c == '\n') {
     serial_putc('\r');
+  }
+}
+
+void serial_puthex(uint32_t val) {
+  const char *hex_chars = "0123456789ABCDEF";
+
+  // Prefix
+  serial_puts("0x");
+
+  // Process each nibble from MSB to LSB
+  for (int i = 28; i >= 0; i -= 4) {
+    uint8_t nibble = (val >> i) & 0xF;
+    serial_putc(hex_chars[nibble]);
   }
 }
 

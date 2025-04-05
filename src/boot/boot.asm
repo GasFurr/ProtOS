@@ -5,16 +5,12 @@
 ; First things first - multiboot2 header.
 
 section .multiboot_header
-
 header_start:
-;   Magic number:
-dd 0xE85250D6
-;   Architecture:
-dd 0 ; i386 or 32-bit protected mode.
-;   Header length:
-dd header_end - header_start
-;   Checksum: -(magic + architecture + header_length)
-dd 0x100000000 - (0xE85250D6 + 0 + (header_end - header_start))
+    dd 0xE85250D6                ; Magic number
+    dd 0                         ; Architecture (i386)
+    dd header_end - header_start ; Header length
+    ; Checksum
+    dd 0x100000000 - (0xE85250D6 + 0 + (header_end - header_start))
 
 ;   Information request tag:
 align 8
@@ -72,25 +68,162 @@ dd 8
 header_end:
 
 section .text
-extern KInit
 global _start
+extern gdt_init
+extern isr_handler     ; C interrupt handler
+extern KInit           ; Kernel entry
+
 _start:
-;   Setting up stack.
-  mov esp, stack_top
-;   Pass Multiboot2 info pointer as argument (EBX holds the adress)
-  push ebx
-;   Pass Multiboot2 Magic Number
-  push eax
-;   Calling C kernel entry point.
-  call KInit
-;   If kernel_entry returns (should'nt happen) - hang.
-  cli
-.haltncatchfire:
-  hlt
-  jmp .haltncatchfire
+    cli
+    
+    ; Set up stack
+    mov esp, stack_top
+    and esp, -16
+    
+    ; Initialize GDT BEFORE loading it
+    call gdt_init    ; This must come first!
+    call gdt_flush   ; Now safe to load GDT
+    
+    call idt_load
+    ; Pass args and enter kernel
+    push ebx
+    push eax
+    call KInit
+    
+    cli
+.hang: hlt
+    jmp .hang
+
+global gdt_flush
+extern gdtp
+gdt_flush:
+    lgdt [gdtp]
+    jmp 0x08:.reload_cs
+.reload_cs:
+    mov ax, 0x10
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov ss, ax
+    ret
+
+; ISR macros for exceptions
+%macro ISR_NOERRCODE 1
+global isr%1
+isr%1:
+    push byte 0        ; Dummy error code
+    push byte %1       ; Interrupt number
+    jmp isr_common
+%endmacro
+
+%macro ISR_ERRCODE 1
+global isr%1
+isr%1:
+    push byte %1       ; Interrupt number (error code already pushed)
+    jmp isr_common
+%endmacro
+
+; Generate ISR stubs for CPU exceptions
+ISR_NOERRCODE 0       ; Divide Error
+ISR_NOERRCODE 1       ; Debug
+ISR_NOERRCODE 2       ; NMI
+ISR_NOERRCODE 3       ; Breakpoint
+ISR_NOERRCODE 4       ; Overflow
+ISR_NOERRCODE 5       ; Bound Range
+ISR_NOERRCODE 6       ; Invalid Opcode
+ISR_NOERRCODE 7       ; Device Not Available
+ISR_ERRCODE   8       ; Double Fault
+ISR_NOERRCODE 9       ; Coprocessor Segment
+ISR_ERRCODE   10      ; Invalid TSS
+ISR_ERRCODE   11      ; Segment Not Present
+ISR_ERRCODE   12      ; Stack Fault
+ISR_ERRCODE   13      ; General Protection Fault
+ISR_ERRCODE   14      ; Page Fault
+ISR_NOERRCODE 15      ; Reserved
+ISR_NOERRCODE 16      ; x87 FPU error // math fault.
+ISR_ERRCODE   17      ; Alignment check
+ISR_NOERRCODE 18      ; Machine check
+ISR_NOERRCODE 19      ; SIMD floating point exception
+ISR_NOERRCODE 20      ; Virtualization exception
+ISR_ERRCODE   21      ; Control protection exception
+ISR_NOERRCODE 22      ; Reserved for future as CPU exception vectors
+ISR_NOERRCODE 23
+ISR_NOERRCODE 24
+ISR_NOERRCODE 25
+ISR_NOERRCODE 26
+ISR_NOERRCODE 27
+ISR_NOERRCODE 28
+ISR_NOERRCODE 29
+ISR_NOERRCODE 30
+ISR_NOERRCODE 31
+
+; Common ISR handler (saves state and calls C function)
+isr_common:
+    pusha              ; Push edi, esi, ebp, esp, ebx, edx, ecx, eax
+    mov ax, ds
+    push eax           ; Save data segment
+
+    mov ax, 0x10       ; Load kernel data descriptor
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+
+    push esp           ; Pass registers pointer to C
+    call isr_handler
+    add esp, 4
+
+    pop eax            ; Restore original data segment
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+
+    popa               ; Restore registers
+    add esp, 8         ; Clean error code and int number
+    iret               ; Return from interrupt
+
+; Remap PIC to avoid conflicts with CPU exceptions
+remap_pic:
+    mov al, 0x11
+    out 0x20, al
+    out 0xA0, al
+
+    mov al, 0x20
+    out 0x21, al
+    mov al, 0x28
+    out 0xA1, al
+
+    mov al, 0x04
+    out 0x21, al
+    mov al, 0x02
+    out 0xA1, al
+
+    mov al, 0x01
+    out 0x21, al
+    out 0xA1, al
+
+    mov al, 0xFF
+    out 0xA1, al
+    out 0x21, al
+    ret
+
+; Load IDT
+global idt_load
+idt_load:
+    lidt [idt_descriptor]
+    ret
+
+section .data
+align 4
+global idt_descriptor
+idt_descriptor:
+    dw 0         ; Size (set in C)
+    dd 0         ; Address (set in C)
 
 section .bss
 align 16
 stack_bottom:
-  resb 65536 ; 64KB stack.
+    resb 16384
 stack_top:

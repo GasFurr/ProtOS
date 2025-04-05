@@ -1,34 +1,45 @@
 /* Linker file */
-ENTRY(KInit)
+ENTRY(_start)  /* Must match assembly entry point */
+
+PHDRS {
+    headers PT_LOAD FLAGS(5);  /* R-X for multiboot header */
+    text PT_LOAD FLAGS(5);     /* R-X */
+    rodata PT_LOAD FLAGS(4);   /* R-- */
+    data PT_LOAD FLAGS(6);     /* RW- */
+}
 
 SECTIONS {
+    /* Kernel base address */
     . = 1M;
 
-    .multiboot_header : {
-        *(.multiboot_header)
-    }
+    /* Multiboot header MUST be first */
+    .multiboot_header : ALIGN(4K) {
+        KEEP(*(.multiboot_header))
+    } :headers
 
-    .text : {
+    /* Code section */
+    .text : ALIGN(4K) {
         *(.text .text.*)
-    }
+    } :text
 
-    .rodata : {
+    /* Read-only data */
+    .rodata : ALIGN(4K) {
         *(.rodata .rodata.*)
-    }
+        *(.font)  /* PSF2 font data */
+    } :rodata
 
-    .data : {
+    /* Initialized data */
+    .data : ALIGN(4K) {
         *(.data .data.*)
-    }
+    } :data
 
-    .font : {
-        KEEP(*(.font))
-    }
-
-    .bss : {
+    /* Uninitialized data */
+    .bss : ALIGN(4K) {
         *(COMMON)
         *(.bss .bss.*)
-    }
+    } :data
 
+    /* Debug sections */
     /DISCARD/ : {
         *(.eh_frame)
         *(.note.*)
