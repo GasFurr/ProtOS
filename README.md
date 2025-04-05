@@ -171,6 +171,7 @@ void serial_puthex(uint32_t val);
 // Outputs 32-bit values as padded hexadecimal
 // Example: 0x1A3F → "0x00001A3F"
 ```
+
 - The kernel is split into two parts - initialization (KInit - init.c) and the main kernel (KMain - main.c).
 
 ### ⚡ Optimization
