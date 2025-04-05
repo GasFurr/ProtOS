@@ -8,7 +8,7 @@
   
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
   ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/GasFurr/ProtOS)
-  ![Version](https://img.shields.io/badge/Version-0.1.8--alpha-red)
+  ![Version](https://img.shields.io/badge/Version-0.1.9--alpha-red)
   [![Build](https://img.shields.io/badge/Build-Passing-brightgreen)](https://github.com/GasFurr/ProtOS/actions)
 
 </div>
@@ -113,7 +113,7 @@ make release
 | grub.cfg                      | ✅ 100%   | Bootloader ready     |
 | MB2 tags header               | 🚧 40%    | Multiboot mysteries  |
 | IDT & GDT                     | 🚫 0%     | CPU gatekeeping      |
-| Graphics/text mode drivers    | 🚧 70%    | Pixel uwusability    |
+| Graphics/text mode drivers    | 🚧 80%    | Pixel uwusability    |
 | Keyboard interwupts           | 🚧 45%     | Keypress archaeology |
 | Time drivers                  | 🚫 0%     | Chronomancy          |
 | bschell                       | 🚫 0%     | Terminal therapy     |
@@ -121,35 +121,22 @@ make release
 
 ---
 
-## 💥 ALPHA 0.1.8 CHANGELOG
+## 💥 ALPHA 0.1.9 CHANGELOG
 
-  Just works. Some optimizations.
+  Just works. Serial output implementation!
 
 ### 🚀 New features
 
-- Text output!
+- Serial output for logging!
 
 ```c
-  void init_font(void);
-//Initializes the font system using embedded PSF2 font data.
-//Must be called after framebuffer initialization.
-  void KOutput(const char *str);
-//Primary text output function - Renders a null-terminated string.
-//Supports:
-//    \n Newlines
-//    \t Tabs (4 character width)
-//    Automatic word wrapping
-  void set_text_color(uint32_t fg, uint32_t bg);
-//Sets foreground and background colors.
-//Parameters:
-//    fg: Foreground color (24-bit RGB)
-//    bg: Background color (24-bit RGB)
-  void set_cursor_pos(uint32_t x, uint32_t y);
-//Sets text cursor position in character grid coordinates
-///Example: set_cursor_pos(2, 3) = Column 3, Row 4
+  serial_init();
+  // Initialization
+  serial_putc('char');
+  // Outputs character to serial port
+  serial_puts("string");
+  // Outputs string to serial port
 ```
-
-- Font terminus-powerline-v16;
 
 ### ⚡ Optimization
 
@@ -161,7 +148,7 @@ make release
 
 ### 📝 Documentation
 
-- Added text.md
+- Added Serial-Output.md
 
 ### 🐉 Known issues
 

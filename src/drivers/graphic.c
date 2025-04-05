@@ -1,6 +1,7 @@
 // graphics.c - Optimized Framebuffer Graphics
 #include "graphic.h"
 #include "mb2tags.h"
+#include "serial.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -36,6 +37,7 @@ void graphics_init(struct multiboot_tag_framebuffer *fb_tag) {
   fb = fb_tag;
   fb_mem = (uint32_t *)(uintptr_t)fb->framebuffer_addr;
   fb_pitch = fb->framebuffer_pitch / sizeof(uint32_t);
+  serial_puts("Graphics initialized!\n");
 }
 
 /**
@@ -108,6 +110,7 @@ void draw_rect(uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint32_t color,
       fb_mem[cy * fb_pitch + (max_x - 1)] = native; // Right
     }
   }
+  serial_puts("Rectangle drawn\n");
 }
 
 /**
@@ -172,4 +175,5 @@ void draw_line(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t color,
       y0 += sy;
     }
   }
+  serial_puts("Line drawn\n");
 }
