@@ -3,6 +3,7 @@
 #include "font.h" // Contains PSF2 header
 #include "graphic.h"
 #include "mb2tags.h"
+#include "serial.h"
 #include <stddef.h>
 
 static uint32_t text_color = 0xFFFFFF;
@@ -48,6 +49,7 @@ void init_font(void) {
   char_height = font_header->height;
   font_glyphs = (const uint8_t *)font_header + font_header->headersize;
 
+  serial_puts("Font initialized!\n");
   // draw_rect(150, 0, 20, 20, 0x00FF00, 1); // Green success
 }
 
@@ -124,4 +126,5 @@ void KOutput(const char *str) {
       cursor_y += (char_height + line_spacing) * font_scale;
     }
   }
+  serial_puts("Text output success!\n");
 }

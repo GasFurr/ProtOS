@@ -3,24 +3,28 @@
 //
 #include "graphic.h"
 #include "mb2tags.h"
+#include "serial.h"
 #include "text.h"
 
 void KInit(uint32_t magic, uint32_t *mb2_info) {
   (void)magic;
-
+  serial_init();
   struct multiboot_tag_framebuffer *fb_tag = mb2_get_fb_tag(mb2_info);
   if (!fb_tag) {
     // Draw fatal error pattern
     for (uint32_t y = 0; y < 50; y++)
       for (uint32_t x = 0; x < 50; x++)
         draw_pixel(x, y, 0xFF0000);
+    serial_puts("FATAL MULTIBOOT ERROR\n");
     while (1)
       ;
   }
 
+  serial_puts("Multiboot tags parsed\n");
   graphics_init(fb_tag);
   clear_screen(BLACK); // black background
   init_font();
+  serial_puts("Serial initialized!\n");
   set_cursor_pos(0, 0);
   set_text_color(PROTOS_BLUE, BLACK);
   KOutput("Test pattern:");
@@ -36,8 +40,9 @@ void KInit(uint32_t magic, uint32_t *mb2_info) {
   // Draw debug grid
 
   set_cursor_pos(0, 5);
-  KOutput(" ProtOS-Alpha 0.1.8\n");
+  KOutput(" ProtOS-Alpha 0.1.9\n");
   KOutput(" Initialization Finished!\n");
+  serial_puts(" ProtOS-Alpha 0.1.9");
 
   while (1)
     __asm__("hlt");
