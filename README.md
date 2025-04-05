@@ -148,7 +148,11 @@ make release
 
 ### 📝 Documentation
 
+<<<<<<< HEAD
 - Added Serial-Output.md
+=======
+- Added Text-Driver.md
+>>>>>>> 08b07930656f3794e50771b79ff9c85c4fed7ca9
 
 ### 🐉 Known issues
 
