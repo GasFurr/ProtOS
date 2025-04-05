@@ -1,19 +1,10 @@
 // serial.c - Serial port implementation
 #include "serial.h"
+#include "io.h"
 #include <stddef.h>
 #include <stdint.h>
 
 #define COM1_PORT 0x3F8
-
-static void outb(unsigned short port, unsigned char val) {
-  asm volatile("outb %0, %1" : : "a"(val), "Nd"(port));
-}
-
-static unsigned char inb(unsigned short port) {
-  unsigned char ret;
-  asm volatile("inb %1, %0" : "=a"(ret) : "Nd"(port));
-  return ret;
-}
 
 void serial_init() {
   outb(COM1_PORT + 1, 0x00); // Disable interrupts

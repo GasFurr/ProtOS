@@ -2,7 +2,7 @@
   <img src="https://github.com/user-attachments/assets/e597ff5e-c87b-4fc6-ba28-3a1fcadbf761" alt="ProtOS Logo" width="1920">
 </p>
 
-<h3 align="center">🛠 Rethink the Wheel | 🐾 Paws-on Development | 🔵 Blueprint for Modern Computing</h3>
+<h1 align="center">🛠Time Driver Development Branch</h1>
 
 <div align="center">
   
