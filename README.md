@@ -122,14 +122,19 @@ make bios
 | bschell                       | 🚫 0%     | Terminal therapy     |
 | Branding                      | ✅ 100%   | No longer disgusting |
 (Yeah, i think 85% is fine for idt/gdt and exception handler.)
+
 ---
+last update: 0.2.1 little patch.
+last big update:
 
 ## 💥 ALPHA 0.2.0 CHANGELOG  
+
   Foundation for Protected Mode! CPU features unlocked.
 
 ### 🚀 New features
 
 - **Global Descriptor Table (GDT) Implementation**  
+
 ```c
 void gdt_init(void);
 // Initializes core CPU segmentation with:
@@ -137,7 +142,9 @@ void gdt_init(void);
 // - 4GB Code segment (ring 0)
 // - 4GB Data segment (ring 0)
 ```
+
 - **Interrupt Descriptor Table (IDT) System**  
+
 ```c
 void idt_init(void); 
 // Configures 256 interrupt gates with:
@@ -145,7 +152,9 @@ void idt_init(void);
 // - Custom ISR routing to C handlers
 // - Full privilege separation
 ```
+
 - **Advanced Exception Handling**  
+
 ```c
 void isr_handler(struct registers *regs);
 // Detailed exception reporting:
@@ -154,7 +163,9 @@ void isr_handler(struct registers *regs);
 // - Faulting instruction pointer
 // - Error codes and CR2 value (page faults)
 ```
+
 - **Serial Hex Debugging**  
+
 ```c
 void serial_puthex(uint32_t val);
 // Outputs 32-bit values as padded hexadecimal
@@ -162,19 +173,23 @@ void serial_puthex(uint32_t val);
 ```
 
 ### ⚡ Optimization
+
 - No new optimizations
 
 ### 🔧 Fixed
+
 - **Magic number validation** in early boot sequence
 - Stack alignment issues causing random crashes
 - GDT descriptor initialization race condition
 
 ### 📝 Documentation
+
 - Added `cpu.md` with GDT/IDT architecture details
 - Updated `serial.md` with hex output documentation
 - Exception codes reference in `exceptions.md`
 
 ### 🐉 Known issues
+
 - Hardware interrupts not yet implemented (keyboard/PIC)
 - No recovery mechanism for critical exceptions
 - Double faults may cause unreported reboots

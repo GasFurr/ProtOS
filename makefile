@@ -103,6 +103,7 @@ run: $(Iso)
 		-serial stdio \
 
 release: $(Iso)
+	$(New) $(Release)
 	cp $(Iso) $(Release)
 
 clean:
