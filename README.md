@@ -8,7 +8,7 @@
   
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
   ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/GasFurr/ProtOS)
-  ![Version](https://img.shields.io/badge/Version-0.1.9--alpha-red)
+  ![Version](https://img.shields.io/badge/Version-0.2.4--alpha-red)
   [![Build](https://img.shields.io/badge/Build-Passing-brightgreen)](https://github.com/GasFurr/ProtOS/actions)
 
 </div>
@@ -111,90 +111,26 @@ make bios
 
 | Task                          | Status    | Notes                |
 |-------------------------------|-----------|----------------------|
-| boot.asm                      | 🚫 40%    | Assembler yoga       |
+| boot.asm                      | ✅ 90%    | Assembler yoga       |
 | Basic makefile                | ✅ 100%   | Builds without fire  |
 | grub.cfg                      | ✅ 100%   | Bootloader ready     |
 | MB2 tags header               | 🚧 40%    | Multiboot mysteries  |
 | IDT & GDT                     | ✅ 85%    | CPU gatekeeping      |
 | Graphics/text mode drivers    | 🚧 83%    | Pixel uwusability    |
 | Keyboard interwupts           | 🚫 0%     | Keypress archaeology |
-| Time drivers                  | 🚫 0%     | Chronomancy          |
+| Time drivers                  | 🚧 70%    | Chronomancy          |
 | bschell                       | 🚫 0%     | Terminal therapy     |
 | Branding                      | ✅ 100%   | No longer disgusting |
 (Yeah, i think 85% is fine for idt/gdt and exception handler.)
 
 ---
-last update: 0.2.1 little patch.
-last big update:
 
-## 💥 ALPHA 0.2.0 CHANGELOG  
+## No more changelogs before 0.4.0 (Full restucturization)
 
-  Foundation for Protected Mode! CPU features unlocked.
-
-### 🚀 New features
-
-- **Global Descriptor Table (GDT) Implementation**  
-
-```c
-void gdt_init(void);
-// Initializes core CPU segmentation with:
-// - Null descriptor
-// - 4GB Code segment (ring 0)
-// - 4GB Data segment (ring 0)
-```
-
-- **Interrupt Descriptor Table (IDT) System**  
-
-```c
-void idt_init(void); 
-// Configures 256 interrupt gates with:
-// - CPU exception handlers (0-31)
-// - Custom ISR routing to C handlers
-// - Full privilege separation
-```
-
-- **Advanced Exception Handling**  
-
-```c
-void isr_handler(struct registers *regs);
-// Detailed exception reporting:
-// - Human-readable error names
-// - Full register dump
-// - Faulting instruction pointer
-// - Error codes and CR2 value (page faults)
-```
-
-- **Serial Hex Debugging**  
-
-```c
-void serial_puthex(uint32_t val);
-// Outputs 32-bit values as padded hexadecimal
-// Example: 0x1A3F → "0x00001A3F"
-```
-
-- The kernel is split into two parts - initialization (KInit - init.c) and the main kernel (KMain - main.c).
-
-### ⚡ Optimization
-
-- No new optimizations
-
-### 🔧 Fixed
-
-- **Magic number validation** in early boot sequence
-- Stack alignment issues causing random crashes
-- GDT descriptor initialization race condition
-
-### 📝 Documentation
-
-- Added `cpu.md` with GDT/IDT architecture details
-- Updated `serial.md` with hex output documentation
-- Exception codes reference in `exceptions.md`
-
-### 🐉 Known issues
-
-- Hardware interrupts not yet implemented (keyboard/PIC)
-- No recovery mechanism for critical exceptions
-- Double faults may cause unreported reboots
+At that time i will restructurize, rewrite and optimize all my code,
+an in this version i will write full documentation. For now all this is just
+a black box because i am too lazy for making changelogs every update understanding
+that nobody reads it anyway.
 
 ---
 

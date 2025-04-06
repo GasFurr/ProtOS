@@ -6,30 +6,19 @@
 #include "idt.h"
 #include "kernel.h"
 #include "mb2tags.h"
+#include "pic.h"
 #include "serial.h"
 #include "text.h"
-
-void test_gdt_protection() {
-  // First validate GDT works for normal access
-  volatile uint32_t *valid_ptr = (uint32_t *)0x00100000;
-  *valid_ptr = 0xDEADBEEF;
-
-  // Then test invalid execution
-  void (*bad_jump)() = (void (*)())valid_ptr;
-  serial_puts("Testing GDT protection...\n");
-  bad_jump(); // Should trigger GPF
-
-  // This should never be reached if protection works
-  serial_puts("GDT PROTECTION FAILED!\n");
-}
+#include "time.h"
 
 void KInit(uint32_t magic, uint32_t *mb2_info) {
   (void)magic;
   gdt_init();
+  pic_remap();
   idt_init();
-  asm volatile("" ::: "memory");
+  asm volatile("sti");
   serial_init();
-  gdt_debug();
+
   struct multiboot_tag_framebuffer *fb_tag = mb2_get_fb_tag(mb2_info);
   if (!fb_tag) {
     // Draw fatal error pattern
@@ -40,6 +29,7 @@ void KInit(uint32_t magic, uint32_t *mb2_info) {
     while (1)
       ;
   }
+
   serial_puts("Multiboot tags parsed\n");
   graphics_init(fb_tag);
   clear_screen(BLACK); // black background
@@ -47,25 +37,36 @@ void KInit(uint32_t magic, uint32_t *mb2_info) {
 
   set_cursor_pos(0, 0);
   set_text_color(PROTOS_BLUE, BLACK);
-  KOutput("GDT Loaded: ");
-  KOutput(gdt[1].access == 0x9A ? "VALID" : "CORRUPT\n");
-  KOutput("Testing GDT PROTECTION \n");
-  /*
-  KOutput("Test pattern:");
-  // Basic framebuffer test
-  // Test pattern
-  draw_rect(100, 40, 100, 100, RED, 1);   // Red
-  draw_rect(210, 40, 100, 100, GREEN, 1); // Green
-  draw_rect(320, 40, 100, 100, BLUE, 1);  // Blue
-  draw_rect(430, 40, 100, 100, WHITE, 1); // White
-  // Protos-Blue line
-  draw_line(0, 155, fb_tag->framebuffer_width - 1, 155, PROTOS_BLUE, 10);
 
-  set_cursor_pos(0, 5);
-  KOutput(" ProtOS-Alpha 0.1.9\n");
-  KOutput(" Initialization Finished!\n");
-  serial_puts(" ProtOS-Alpha 0.1.9");
-  */
+  serial_puts("Initializing timer...\n");
+  KOutput("[GDT] Initialized\n[PIC] Remap completed\n[OUT] Serial out "
+          "initialized \n[IDT] Initialized \n [MB2] Tags parsed\n");
+  timer_init(1000);
+
+  serial_puts("PIT configured for ");
+  serial_puthex(1193180 / (PIT_FREQUENCY / 1000)); // Should show 1000
+  serial_puts("Hz\n");
+  KOutput("[TIMER] PIT Configured");
+
+  // 1. Check initial tick count
+  serial_puts("Initial ticks: ");
+  serial_puthex(timer_ticks());
+  serial_puts("\n");
+
+  // 2. Simple count-up test
+  for (int i = 0; i < 5; i++) {
+    uint32_t start = timer_ticks();
+    serial_puts("Waiting 100ms... ");
+    sleep(100); // Use your sleep function
+    uint32_t elapsed = timer_ticks() - start;
+
+    serial_puts("Elapsed: ");
+    serial_puthex(elapsed);
+    serial_puts(" ticks\n");
+  }
+  KOutput("\n[TIMER] Working");
+  sleep(10);
+  KOutput("\nCalling KMain...\n");
   serial_puts("Calling KMain... \n ------ \n");
   KMain();
 

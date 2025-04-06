@@ -1,6 +1,8 @@
 // idt.c
 #include "idt.h"
+#include "io.h"
 #include "serial.h"
+#include "time.h"
 
 struct idt_entry idt[256];
 struct idt_ptr idtp;
@@ -23,7 +25,10 @@ void idt_init() {
   // Set all IDT entries
   for (int i = 0; i < 256; i++) {
     idt_set_entry(i, 0, 0x08, 0x8E);
+    // 32 = IRQ0 vector, 0x8E = present+interrupt gate
   }
+
+  idt_set_entry(32, (uint32_t)timer_handler, 0x08, 0x8E);
 
   // Set CPU exception handlers (0-31)
   extern void isr0(), isr1(), isr2(), isr3(), isr4(), isr5(), isr6(), isr7(),

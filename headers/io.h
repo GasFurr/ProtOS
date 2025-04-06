@@ -15,4 +15,11 @@ static inline void outb(uint16_t port, uint8_t val) {
   __asm__ volatile("outb %0, %1" : : "a"(val), "Nd"(port));
 }
 
+struct interrupt_frame {
+  uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax;
+  uint32_t gs, fs, es, ds;
+  uint32_t int_num, err_code;
+  uint32_t eip, cs, eflags, user_esp, ss;
+};
+
 #endif

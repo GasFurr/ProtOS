@@ -2,6 +2,7 @@
 #include "kernel.h"
 #include "serial.h"
 #include "text.h"
+#include "time.h"
 #include <gdt.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -14,12 +15,25 @@ void KMain() {
   clear_screen(BLACK);
   set_cursor_pos(1, 0);
   // And then text output;
+  sleep(500);
   KOutput("\tMain kernel started.\n");
   set_text_color(WHITE, BLACK);
+  sleep(1000);
+  KOutput("No difference between day and night\n");
+  sleep(1100);
+  KOutput("No thoughts at all\n");
+  sleep(900);
+  KOutput("No dreams\n");
+  sleep(1000);
+  KOutput("Day and night are the same -");
+  sleep(700);
+  KOutput(" blank.\n");
+  sleep(1100);
+  set_text_color(RED, BLACK);
+  KOutput("Precisely like death. \n");
 
-  KOutput(
-      " No difference between day and night\n No thoughts at all\n No dreams\n "
-      "Day and night are the same - blank \n Precisely like death.");
   // Halt and catch fire.
-  hcf();
+  while (1) {
+    hcf();
+  }
 }

@@ -10,8 +10,8 @@ New = mkdir -p
 # Flags
 CFlags = -m32 -ffreestanding -nostdlib -nostartfiles \
          -Wall -Wextra -I$(Headers) -fno-pie -fno-pic \
-         -fno-stack-protector -Wno-type-limits
-
+         -fno-stack-protector -Wno-type-limits -mno-sse\
+				 -mno-sse2 -mno-mmx -mno-80387
 ASMFflags = -f elf32
 LDFlags = -m elf_i386 -T src/linker.ld -nostdlib
 

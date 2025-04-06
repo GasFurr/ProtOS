@@ -37,10 +37,14 @@ dw 5
 dw 0x1
 ;   Size 20 bytes (8 header + 3*4)
 dd 20
-;   Width: 0 - Just let GRUB choose.
+;   Width: 1920
 dd 1920
-;   Height:
+;   Height: 1080
 dd 1080
+;   Unfortunately, when i set it to 0 so
+;   give choice to GRUB it just breaks. 
+;   I dont know why and how to fix it.
+
 ;   Depth: 32 bits per pixel
 dd 32
 

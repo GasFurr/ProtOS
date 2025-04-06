@@ -1,0 +1,1 @@
+void remap_pic();
