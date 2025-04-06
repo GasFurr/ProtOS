@@ -8,7 +8,7 @@
   
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
   ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/GasFurr/ProtOS)
-  ![Version](https://img.shields.io/badge/Version-0.2.4--alpha-red)
+  ![Version](https://img.shields.io/badge/Version-0.2.6--alpha-red)
   [![Build](https://img.shields.io/badge/Build-Passing-brightgreen)](https://github.com/GasFurr/ProtOS/actions)
 
 </div>
@@ -116,7 +116,7 @@ make bios
 | grub.cfg                      | ✅ 100%   | Bootloader ready     |
 | MB2 tags header               | 🚧 40%    | Multiboot mysteries  |
 | IDT & GDT                     | ✅ 85%    | CPU gatekeeping      |
-| Graphics/text mode drivers    | 🚧 83%    | Pixel uwusability    |
+| Graphics/text mode drivers    | 🚧 87%    | Pixel uwusability    |
 | Keyboard interwupts           | 🚫 0%     | Keypress archaeology |
 | Time drivers                  | 🚧 70%    | Chronomancy          |
 | bschell                       | 🚫 0%     | Terminal therapy     |
@@ -131,6 +131,11 @@ At that time i will restructurize, rewrite and optimize all my code,
 an in this version i will write full documentation. For now all this is just
 a black box because i am too lazy for making changelogs every update understanding
 that nobody reads it anyway.
+
+### Known issues
+
+KOutput_center() poorly coded and just dont really work as it should
+Hardcoded 1920x1080 resolution.
 
 ---
 

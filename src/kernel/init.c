@@ -32,42 +32,13 @@ void KInit(uint32_t magic, uint32_t *mb2_info) {
 
   serial_puts("Multiboot tags parsed\n");
   graphics_init(fb_tag);
-  clear_screen(BLACK); // black background
   init_font();
 
   set_cursor_pos(0, 0);
+  set_background_color(BLACK);
   set_text_color(PROTOS_BLUE, BLACK);
-
-  serial_puts("Initializing timer...\n");
-  KOutput("[GDT] Initialized\n[PIC] Remap completed\n[OUT] Serial out "
-          "initialized \n[IDT] Initialized \n [MB2] Tags parsed\n");
+  clear_screen(); // black background
   timer_init(1000);
-
-  serial_puts("PIT configured for ");
-  serial_puthex(1193180 / (PIT_FREQUENCY / 1000)); // Should show 1000
-  serial_puts("Hz\n");
-  KOutput("[TIMER] PIT Configured");
-
-  // 1. Check initial tick count
-  serial_puts("Initial ticks: ");
-  serial_puthex(timer_ticks());
-  serial_puts("\n");
-
-  // 2. Simple count-up test
-  for (int i = 0; i < 5; i++) {
-    uint32_t start = timer_ticks();
-    serial_puts("Waiting 100ms... ");
-    sleep(100); // Use your sleep function
-    uint32_t elapsed = timer_ticks() - start;
-
-    serial_puts("Elapsed: ");
-    serial_puthex(elapsed);
-    serial_puts(" ticks\n");
-  }
-  KOutput("\n[TIMER] Working");
-  sleep(10);
-  KOutput("\nCalling KMain...\n");
-  serial_puts("Calling KMain... \n ------ \n");
   KMain();
 
   hcf();

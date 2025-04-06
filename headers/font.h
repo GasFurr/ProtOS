@@ -14,7 +14,6 @@ struct psf2_header {
   uint32_t bytes_per_glyph;
   uint32_t height;
   uint32_t width;
-  uint32_t reserved[4]; // PSF2 has 32 byte header
 };
 
 // Font symbols

@@ -63,7 +63,7 @@ void draw_pixel(uint32_t x, uint32_t y, uint32_t color) {
 /**
  * Optimized screen clear
  */
-void clear_screen(uint32_t color) {
+void clear_graphics(uint32_t color) {
   if (!fb)
     return;
 
@@ -110,7 +110,6 @@ void draw_rect(uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint32_t color,
       fb_mem[cy * fb_pitch + (max_x - 1)] = native; // Right
     }
   }
-  serial_puts("Rectangle drawn\n");
 }
 
 /**
@@ -176,4 +175,12 @@ void draw_line(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t color,
     }
   }
   serial_puts("Line drawn\n");
+}
+
+uint32_t get_pixel(uint32_t x, uint32_t y) {
+  if (!fb || x >= fb->framebuffer_width || y >= fb->framebuffer_height)
+    return 0;
+
+  // Direct access using precomputed pitch
+  return fb_mem[y * fb_pitch + x];
 }

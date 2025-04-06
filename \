@@ -12,11 +12,12 @@ void KMain() {
   serial_puts("\nProtOS Main Kernel started.\n");
   // Clearing screen and setting up cursor.
   // Well, its all just tests, "do everything initialized?"
-  clear_screen();
+  clear_screen(BLACK);
   set_cursor_pos(1, 0);
   // And then text output;
   sleep(500);
   KOutput("\tMain kernel started.\n");
+  draw_cursor(0);
   set_text_color(WHITE, BLACK);
   sleep(1000);
   KOutput("No difference between day and night\n");
@@ -30,9 +31,14 @@ void KMain() {
   KOutput(" blank.\n");
   sleep(1100);
   set_text_color(RED, BLACK);
-  KOutput_center("Precisely like death.");
+  KOutput("Precisely like death. \n\b\b\b\b\b\b\b\b");
   sleep(1000);
-  clear_screen();
+  clear_line(5);
+  sleep(1000);
+  clear_text(PROTOS_BLACK);
+  sleep(1000);
+  KOutput_color("Shiett\n", PROTOS_BLUE, PROTOS_BLACK);
+  KOutput("Uncolored.");
 
   // Halt and catch fire.
   while (1) {

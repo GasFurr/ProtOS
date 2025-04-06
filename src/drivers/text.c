@@ -1,32 +1,26 @@
-// text.c
 #include "text.h"
-#include "font.h" // Contains PSF2 header
+#include "font.h"
 #include "graphic.h"
 #include "mb2tags.h"
 #include "serial.h"
-#include <stddef.h>
+#include "string.h"
+#include "time.h"
 
+// Text state
 static uint32_t text_color = 0xFFFFFF;
 static uint32_t bg_color = 0x000000;
 static uint32_t cursor_x = 0;
 static uint32_t cursor_y = 0;
-uint32_t char_width = 8;
-uint32_t char_height = 16;
-uint32_t font_scale = 2;
-uint32_t char_spacing = 2;
-uint32_t line_spacing = 2;
+static uint32_t char_width = 8;
+static uint32_t char_height = 16;
+static uint32_t font_scale = 1;
+static uint32_t char_spacing = 1;
+static uint32_t line_spacing = 2;
+static uint32_t current_bg_color = 0x000000;
 
+// Font data
 static const struct psf2_header *font_header;
 static const uint8_t *font_glyphs;
-
-static int memcmp(const void *s1, const void *s2, size_t n) {
-  const unsigned char *p1 = s1, *p2 = s2;
-  for (size_t i = 0; i < n; i++) {
-    if (p1[i] != p2[i])
-      return p1[i] - p2[i];
-  }
-  return 0;
-}
 
 void init_font(void) {
   font_header = (const struct psf2_header *)&_binary_font_psf_start;
@@ -53,24 +47,48 @@ void init_font(void) {
   // draw_rect(150, 0, 20, 20, 0x00FF00, 1); // Green success
 }
 
+void set_background_color(uint32_t color) { current_bg_color = color; }
+
+void set_font_scale(uint32_t scale) {
+  font_scale = (scale < 1) ? 1 : (scale > 4 ? 4 : scale);
+}
+
 void set_text_color(uint32_t fg, uint32_t bg) {
   text_color = fg;
-  bg_color = bg;
+  current_bg_color = bg; // Update background color
 }
-
 void set_cursor_pos(uint32_t x, uint32_t y) {
-  cursor_x = x * char_width * font_scale;  // Add scaling
-  cursor_y = y * char_height * font_scale; // Add scaling
+  cursor_x = x * (char_width + char_spacing) * font_scale;
+  cursor_y = y * (char_height + line_spacing) * font_scale;
+
+  // Clamp to screen bounds
+  if (cursor_x >= fb->framebuffer_width)
+    cursor_x = fb->framebuffer_width - (char_width * font_scale);
+  if (cursor_y >= fb->framebuffer_height)
+    cursor_y = fb->framebuffer_height - (char_height * font_scale);
 }
 
-// Add missing advance_cursor function
-static void advance_cursor(void) {
-  cursor_x += char_width * font_scale;
+static uint32_t calculate_text_width(const char *str) {
+  size_t len = strlen(str);
+  if (len == 0)
+    return 0;
+  return len * (char_width + char_spacing) * font_scale -
+         char_spacing * font_scale;
+}
 
-  // Check against scaled width
+void advance_cursor() {
+  cursor_x += (char_width + char_spacing) * font_scale;
+
+  // Handle line wrap
   if (cursor_x + (char_width * font_scale) > fb->framebuffer_width) {
     cursor_x = 0;
-    cursor_y += char_height * font_scale; // Scaled line height
+    cursor_y += (char_height + line_spacing) * font_scale;
+
+    // Handle screen scroll
+    if (cursor_y + (char_height * font_scale) > fb->framebuffer_height) {
+      scroll_screen(1);
+      cursor_y -= (char_height + line_spacing) * font_scale;
+    }
   }
 }
 
@@ -109,22 +127,117 @@ void draw_char(unsigned char c) {
   advance_cursor();
 }
 
+void erase_char() {
+  if (cursor_x == 0 && cursor_y == 0)
+    return;
+
+  // Move back one character
+  if (cursor_x == 0) {
+    if (cursor_y >= (char_height + line_spacing) * font_scale) {
+      cursor_y -= (char_height + line_spacing) * font_scale;
+    }
+    cursor_x = fb->framebuffer_width - (char_width * font_scale);
+  } else {
+    cursor_x -= (char_width + char_spacing) * font_scale;
+  }
+
+  // Clear character area
+  draw_rect(cursor_x, cursor_y, char_width * font_scale,
+            char_height * font_scale, bg_color, 1);
+}
+
+void scroll_screen(uint32_t lines) {
+  uint32_t scroll_pixels = lines * (char_height + line_spacing) * font_scale;
+  uint32_t bytes_per_line = fb->framebuffer_pitch;
+
+  // Scroll framebuffer contents
+  uint8_t *dst = (uint8_t *)fb->framebuffer_addr;
+  uint8_t *src = dst + scroll_pixels * bytes_per_line;
+  size_t size = (fb->framebuffer_height - scroll_pixels) * bytes_per_line;
+  memmove(dst, src, size);
+
+  // Clear new area with current background color
+  uint32_t *fb_end = (uint32_t *)(dst + size);
+  size_t pixels_to_clear = (scroll_pixels * bytes_per_line) / sizeof(uint32_t);
+
+  for (size_t i = 0; i < pixels_to_clear; i++) {
+    fb_end[i] = current_bg_color;
+  }
+}
+
 void KOutput(const char *str) {
   for (size_t i = 0; str[i]; i++) {
-    if (str[i] == '\n') {
+    switch (str[i]) {
+    case '\n':
       cursor_x = 0;
       cursor_y += (char_height + line_spacing) * font_scale;
-    } else if (str[i] == '\t') {
-      cursor_x += (char_width + char_spacing) * font_scale * 4;
-    } else {
+      if (cursor_y + (char_height * font_scale) > fb->framebuffer_height) {
+        scroll_screen(1);
+        cursor_y -= (char_height + line_spacing) * font_scale;
+      }
+      break;
+    case '\t':
+      for (int t = 0; t < 4; t++)
+        draw_char(' ');
+      break;
+    case '\b':
+      erase_char();
+      break;
+    default:
       draw_char(str[i]);
-    }
-
-    // Simple word wrap
-    if (cursor_x + (char_width * font_scale) > fb->framebuffer_width) {
-      cursor_x = 0;
-      cursor_y += (char_height + line_spacing) * font_scale;
+      break;
     }
   }
-  serial_puts("Text output success!\n");
+}
+
+// This shet not working, just hardcoded it to (sometimes) work.
+// I hope in 4.0.0 i will fix it.
+void KOutput_center(const char *str) {
+  uint32_t saved_x = cursor_x;
+  uint32_t text_width = calculate_text_width(str);
+  cursor_x = (fb->framebuffer_width - text_width) / 3;
+  KOutput(str);
+  cursor_x = saved_x;
+}
+
+void KOutput_left(const char *str) {
+  uint32_t saved_x = cursor_x;
+  cursor_x = 0;
+  KOutput(str);
+  cursor_x = saved_x;
+}
+
+void KOutput_right(const char *str) {
+  uint32_t saved_x = cursor_x;
+  uint32_t text_width = calculate_text_width(str);
+  cursor_x = fb->framebuffer_width - text_width;
+  KOutput(str);
+  cursor_x = saved_x;
+}
+
+void KOutput_color(const char *str, uint32_t fg, uint32_t bg) {
+  uint32_t saved_fg = text_color;
+  uint32_t saved_bg = bg_color;
+  set_text_color(fg, bg);
+  KOutput(str);
+  set_text_color(saved_fg, saved_bg);
+}
+
+void clear_screen() {
+  if (!fb)
+    return;
+
+  const size_t total_pixels = fb->framebuffer_width * fb->framebuffer_height;
+  for (size_t i = 0; i < total_pixels; i++) {
+    fb_mem[i] = current_bg_color;
+  }
+
+  cursor_x = 0;
+  cursor_y = 0;
+}
+
+void clear_line(uint32_t y) {
+  uint32_t line_height = (char_height + line_spacing) * font_scale;
+  draw_rect(0, y * line_height, fb->framebuffer_width, line_height,
+            current_bg_color, 1);
 }
