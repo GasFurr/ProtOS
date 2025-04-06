@@ -1,6 +1,6 @@
 // idt.c
 #include "idt.h"
-#include "io.h"
+#include "kb.h"
 #include "serial.h"
 #include "time.h"
 
@@ -29,6 +29,7 @@ void idt_init() {
   }
 
   idt_set_entry(32, (uint32_t)timer_handler, 0x08, 0x8E);
+  idt_set_entry(0x21, (uint32_t)keyboard_handler, 0x08, 0x8E);
 
   // Set CPU exception handlers (0-31)
   extern void isr0(), isr1(), isr2(), isr3(), isr4(), isr5(), isr6(), isr7(),

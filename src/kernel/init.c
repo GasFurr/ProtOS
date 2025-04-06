@@ -4,6 +4,7 @@
 #include "gdt.h"
 #include "graphic.h"
 #include "idt.h"
+#include "kb.h"
 #include "kernel.h"
 #include "mb2tags.h"
 #include "pic.h"
@@ -16,6 +17,7 @@ void KInit(uint32_t magic, uint32_t *mb2_info) {
   gdt_init();
   pic_remap();
   idt_init();
+  keyboard_init();
   asm volatile("sti");
   serial_init();
 

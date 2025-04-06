@@ -1,4 +1,5 @@
 #include "graphic.h"
+#include "kb.h"
 #include "kernel.h"
 #include "serial.h"
 #include "text.h"
@@ -36,6 +37,10 @@ void KMain() {
 
   // Halt and catch fire.
   while (1) {
-    hcf();
+    char c = keyboard_read();
+    if (c != 0) {
+      char str[2] = {c, 0};
+      KOutput(str);
+    }
   }
 }
