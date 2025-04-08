@@ -188,6 +188,47 @@ isr_common:
     add esp, 8         ; Clean error code and int number
     iret               ; Return from interrupt
 
+extern irq_handler
+
+%macro IRQ 2
+global irq%1
+irq%1:
+    push byte 0     ; Dummy error code
+    push byte %2    ; Interrupt number
+    jmp irq_common
+%endmacro
+
+; Create IRQ stubs 0-15
+IRQ 0, 32  ; Timer
+IRQ 1, 33  ; Keyboard
+IRQ 2, 34
+; ... continue for other IRQs
+
+irq_common:
+    pusha              ; Save all registers
+    mov ax, ds
+    push eax           ; Save data segment
+
+    mov ax, 0x10       ; Load kernel data segment
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+
+    push esp           ; Pass registers pointer to C
+    call irq_handler
+    add esp, 4
+
+    pop ebx            ; Restore original data segment
+    mov ds, bx
+    mov es, bx
+    mov fs, bx
+    mov gs, bx
+
+    popa               ; Restore registers
+    add esp, 8         ; Clean error code and int number
+    iret
+
 ; Remap PIC to avoid conflicts with CPU exceptions
 remap_pic:
     mov al, 0x11

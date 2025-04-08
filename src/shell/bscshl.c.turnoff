@@ -1,0 +1,85 @@
+#include "bscshl.h"
+#include "graphic.h"
+#include "kb.h"
+#include "string.h"
+#include "text.h"
+
+#define MAX_CMD_LEN 64
+#define MAX_HISTORY 10
+
+static uint32_t cursor_pos = 0;
+static uint32_t history_index = 0;
+static char history[MAX_HISTORY][MAX_CMD_LEN];
+
+typedef struct {
+  const char *cmd;
+  void (*func)(const char *args);
+} ShellCommand;
+
+void shell_help();
+void shell_clear();
+void shell_echo(const char *args);
+
+static const ShellCommand commands[] = {
+    {"help", shell_help}, {"clear", shell_clear}, {"echo", shell_echo}, {0, 0}};
+
+void shell_init() {
+  clear_screen();
+  set_text_color(0x00FF00, BLACK); // Green on black
+  shell_prompt();
+}
+
+void shell_prompt() { KOutput("\n ProtOS> "); }
+
+void shell_clear() {
+  clear_screen();
+  shell_prompt();
+}
+
+void shell_help() {
+  KOutput("\nAvailable commands:\n");
+  for (const ShellCommand *cmd = commands; cmd->cmd; cmd++) {
+    KOutput(" - ");
+    KOutput(cmd->cmd);
+    KOutput("\n");
+  }
+}
+
+void shell_echo(const char *args) {
+  KOutput("\n");
+  KOutput(args);
+}
+
+void execute_command(void) {
+  KOutput("\n");
+
+  if (buffer_index == 0) {
+    shell_prompt();
+    return;
+  }
+
+  input_buffer[buffer_index] = '\0'; // Null-terminate
+  buffer_index = 0;                  // Reset for next input
+
+  // Parse command and args
+  char *cmd = strtok(input_buffer, " ");
+  char *args = strtok(NULL, ""); // Get remaining string
+
+  if (!cmd) {
+    shell_prompt();
+    return;
+  }
+
+  // Search for command
+  for (const ShellCommand *c = commands; c->cmd; c++) {
+    if (strcmp(cmd, c->cmd) == 0) {
+      c->func(args ? args : ""); // Execute with args
+      shell_prompt();
+      return;
+    }
+  }
+
+  KOutput("Command not found: ");
+  KOutput(cmd);
+  shell_prompt();
+}

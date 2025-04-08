@@ -1,5 +1,7 @@
 #include "string.h"
 
+static char *strtok_save = NULL;
+
 void *memcpy(void *dest, const void *src, size_t n) {
   uint8_t *d = (uint8_t *)dest;
   const uint8_t *s = (const uint8_t *)src;
@@ -92,4 +94,58 @@ char *strncat(char *dest, const char *src, size_t n) {
     ;
   *dest = '\0';
   return orig;
+}
+
+char *strchr(char *s, int c) {
+  while (*s != (char)c) {
+    if (*s == '\0')
+      return NULL;
+    s++;
+  }
+  return (char *)s;
+}
+
+size_t strspn(const char *s, const char *accept) {
+  size_t count = 0;
+  while (*s && strchr(accept, *s)) {
+    count++;
+    s++;
+  }
+  return count;
+}
+
+size_t strcspn(const char *s, const char *reject) {
+  size_t count = 0;
+  while (*s && !strchr(reject, *s)) {
+    count++;
+    s++;
+  }
+  return count;
+}
+
+char *strtok(char *str, const char *delim) {
+  char *end;
+  if (str == NULL) {
+    if (strtok_save == NULL)
+      return NULL;
+    str = strtok_save;
+  }
+
+  // Skip leading delimiters
+  str += strspn(str, delim);
+  if (*str == '\0') {
+    strtok_save = NULL;
+    return NULL;
+  }
+
+  // Find end of token
+  end = str + strcspn(str, delim);
+  if (*end != '\0') {
+    *end = '\0';
+    strtok_save = end + 1;
+  } else {
+    strtok_save = NULL;
+  }
+
+  return str;
 }

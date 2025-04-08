@@ -1,181 +1,104 @@
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/e597ff5e-c87b-4fc6-ba28-3a1fcadbf761" alt="ProtOS Logo" width="1920">
+  <img src="https://github.com/user-attachments/assets/e597ff5e-c87b-4fc6-ba28-3a1fcadbf761" alt="ProtOS" width="1920">
 </p>
-
-<h1 align="center">🛠Time Driver Development Branch</h1>
-
 <div align="center">
-  
-  [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-  ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/GasFurr/ProtOS)
-  ![Version](https://img.shields.io/badge/Version-0.2.6--alpha-red)
-  [![Build](https://img.shields.io/badge/Build-Passing-brightgreen)](https://github.com/GasFurr/ProtOS/actions)
+
+[![License: Fuck Around](https://img.shields.io/badge/license-MIT-red)](https://choosealicense.com/licenses/mit/)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/GasFurr/ProtOS?color=orange)
+![Version](https://img.shields.io/badge/version-0.3.0--alpha-yellow)
 
 </div>
 
 ---
 
-> **⚠️ Dragon Warning**  
-> ProtOS is currently in its embryonic stage. Expect broken code, sudden rewrites, and occasional tears. Not suitable for production (or sanity).
-
-## 🚀 Philosophy in Three Acts
-
-<div align="center">
-
-**⚡ Fast & Fresh**
-
-*Modern hardware deserves modern software - no legacy baggage allowed*
-
-**🧩 Modular by Design**
-
-*Just snap components together, all in one system configuration file.*
-
-**🔭 Future-First**
-
-*Why walk when you can teleport? No legacy baggage, robust GRUB-powered foundation*
-
-</div>
+> **⚠️ Live Fast Crash Harder**  
+> Experimental OS kernel for people who think `rm -rf /` is a good starting point.  
+> Current features: pixels, beeps, existential dread
 
 ---
 
-## 📦 Project Anatomy
+**ProtOS** is a kernel that shouldn't exist.  
+Born from insomnia and spite, it's:
+
+- A 32-bit time capsule for broken hardware
+- Your terminal aesthetic's toxic ex.
+
+---
+
+### **Why Bother?**
+- **Because 1993 called** - Let's rebuild UNIX but with RGB  
+- **For the aesthetic** - Light-blue text on black background never hurt anyone 
+
+(except your retinas)  
+- **Actual reason** - I forgot how to stop coding this. Just another hyperfixation.
+
+((I again stayed up until 4AM coding to My Bloody Valentine albums))
+
+---
 
 ```bash
-ProtOS/
-├── build/          # Compiled objects
-├── docs/           # Documentation womb
-├── grub/           # Bootloader configs
-├── headers/        # C headers party
-├── src/            # Kernel guts
-│   ├── boot/       # Boot sequence acrobatics
-│   ├── drivers/    # Hardware whisperers
-│   └── kernel/     # Core brain surgery
-└── tools/          # Build-time gadgets
-```
+# Clone with surgical hatred
+git clone https://github.com/GasFurr/ProtOS.git && cd ProtOS
 
-## 🛠️ Building the Beast
+# Build instructions for the brave
+make && make run  # Pray to your favorite dead computer scientist
 
-### Summon dependencies (choose your distro flavor)
+make bios # If you love VGA. No, VGA not working.
 
-<details>
-<summary>Arch/Manjaro (yay required)</summary>
-
-```bash
-# Summon compiler dragons (i use arch btw)
-yay -S grub nasm gcc binutils qemu-full edk2-ovmf
-```
-
-</details>
-
-<details>
-<summary>Debian/Ubuntu (apt required)</summary>
-
-```bash
-# For our Debian/Ubuntu friends:
-sudo apt install grub-pc nasm gcc binutils qemu-system-x86 ovmf
-```
-
-</details>
-
-```bash
-# Clone with surgical precision
-git clone https://github.com/GasFurr/ProtOS.git
-
-# Summon the build spirits
-make all
-
-# For brave souls only:
-make run
-
-# To bring tears
-make debug
-
-# To just build the iso
-make release
-
-# To boot with bios
-make bios
+make release # Funny, *release*
 ```
 
 ---
 
-> **🐉 Dragon's Note**  
-> QEMU testing requires OVMF firmware. We don't ship it for the same reason
-> dragons don't share gold: Lawyers. Get yours from
-> [EDK2](https://github.com/tianocore/edk2) or `sudo pacman -S edk2-ovmf`
-> then copy `OVMF_CODE.fd` to firmware folder. No hoard, no boot!
+### Current State of the Union:
+- **What works**:  
+  `Keyboard?` Sorta  
+  `Screen?` Pixel vomit  
+  `Hope?` ¯\_(ツ)_/¯
+
+- **What doesn't**:  
+  `Your expectations`
 
 ---
 
-## 📋 Progress Report (Survival Mode)
+### Philosophy:
 
-| Task                          | Status    | Notes                |
-|-------------------------------|-----------|----------------------|
-| boot.asm                      | ✅ 90%    | Assembler yoga       |
-| Basic makefile                | ✅ 100%   | Builds without fire  |
-| grub.cfg                      | ✅ 100%   | Bootloader ready     |
-| MB2 tags header               | 🚧 40%    | Multiboot mysteries  |
-| IDT & GDT                     | ✅ 85%    | CPU gatekeeping      |
-| Graphics/text mode drivers    | 🚧 87%    | Pixel uwusability    |
-| Keyboard interwupts           | 🚫 0%     | Keypress archaeology |
-| Time drivers                  | 🚧 70%    | Chronomancy          |
-| bschell                       | 🚫 0%     | Terminal therapy     |
-| Branding                      | ✅ 100%   | No longer disgusting |
-(Yeah, i think 85% is fine for idt/gdt and exception handler.)
+*"Why walk when you can segfault?"*
 
 ---
 
-## No more changelogs before 0.4.0 (Full restucturization)
-
-At that time i will restructurize, rewrite and optimize all my code,
-an in this version i will write full documentation. For now all this is just
-a black box because i am too lazy for making changelogs every update understanding
-that nobody reads it anyway.
-
-### Known issues
-
-KOutput_center() poorly coded and just dont really work as it should
-Hardcoded 1920x1080 resolution.
+### Roadmap (Delusional Edition):
+1. RTC (Real time clock)
+2. Filesystem 
+3. Whatever? Having fun? Take a shower?
+4. Ah, yeah, ZIG rewrite. (0.4.0 with all restructing and optimiztion.)
 
 ---
 
-## 🔮 Crystal Ball (Roadmap)
-
-- **Phase 1**: Make computer go beep (hardware communication)
-- **Phase 2**: Pretend we're UNIX (basic shell operations)
-- **Phase 3**: ??? (profit)
+### **Changelog (alpha v0.3.0 )**
+```
++ Pretends to handle keyboard interrupts
++ Added existential crisis to shell  
+- Removed hope. Changed system philosophy.
+! Font now 12% more buggy.
+```
 
 ---
 
-## 📜 License to Tinker
-
-MIT Licensed - Do whatever you want, but maybe mention us if it blows up.  
-*"Rethink the Wheel"* isn't just a slogan - it's a way of life (and possibly yarn).
-
-<p align="left">
-  <img src="https://github.com/user-attachments/assets/77f70569-2c2f-444d-b800-6cd5005d2e5d" alt="ProtOS Logo" width="600">
-</p>
+### **Legal-ish Stuff**
+MIT Licensed - Do crimes with this code idc.
+(Just add "©GasFurr" somewhere)
 
 ---
 
 <div align="center">
   
-## 📬 Contact
-
-Got questions, suggestions, or dragon taming tips?  
-📧 [gasfurri@gmail.com](mailto:gasfurri@gmail.com)
-  
-  ![GitHub last commit](https://img.shields.io/github/last-commit/GasFurr/ProtOS?color=blue)
-
-</div>
-
----
-
 ```asciiart
  /\_/\  
-( o.o ) 
- > ^ <  /* Compiles with love */
+( ◕‿◕ ) 
+ > ᴗ <   /* Compiles through tears */
 ```
 
-"UNIX is user-friendly. It’s just selective about who its friends are"
-(carved on a kernel developer's tombstone)
+**UNIX is user-friendly**  
+*It just hates you personally*
+</div>

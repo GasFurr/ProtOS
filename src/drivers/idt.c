@@ -1,6 +1,8 @@
 // idt.c
 #include "idt.h"
+#include "io.h"
 #include "kb.h"
+#include "pic.h"
 #include "serial.h"
 #include "time.h"
 
@@ -17,6 +19,9 @@ void idt_set_entry(uint8_t num, uint32_t base, uint16_t sel, uint8_t flags) {
   idt[num].flags = flags | 0x60; // Present, ring 0
 }
 extern struct idt_ptr idt_descriptor; // Reference ASM symbol
+extern void irq0(), irq1();           // Add declarations for assembly IRQ stubs
+
+// Replace direct C handler assignments with:
 
 void idt_init() {
   idt_descriptor.limit = sizeof(struct idt_entry) * 256 - 1; // Add 'struct'
@@ -28,8 +33,9 @@ void idt_init() {
     // 32 = IRQ0 vector, 0x8E = present+interrupt gate
   }
 
-  idt_set_entry(32, (uint32_t)timer_handler, 0x08, 0x8E);
-  idt_set_entry(0x21, (uint32_t)keyboard_handler, 0x08, 0x8E);
+  idt_set_entry(0x20, (uint32_t)irq0, 0x08, 0x8E);
+
+  idt_set_entry(0x21, (uint32_t)irq1, 0x08, 0x8E);
 
   // Set CPU exception handlers (0-31)
   extern void isr0(), isr1(), isr2(), isr3(), isr4(), isr5(), isr6(), isr7(),
@@ -142,4 +148,24 @@ void isr_handler(struct registers *regs) {
 
   while (1)
     ; // Halt
+}
+
+void irq_handler(struct registers *regs) {
+  // Handle specific IRQs
+  if (regs->int_num >= 32) {
+    switch (regs->int_num) {
+    case 0x20:
+      timer_handler();
+      break;
+    case 0x21:
+      keyboard_interrupt_handler();
+      break;
+    }
+  }
+
+  // Send EOI to PICs
+  if (regs->int_num >= 0x28) {
+    outb(PIC2_CMD, 0x20);
+  }
+  outb(PIC1_CMD, 0x20);
 }

@@ -77,7 +77,7 @@ $(FontObject): $(Font)
 		$< $@
 
 bios: $(Iso)
-	qemu-system-x86_64 -cdrom $(Iso)
+	qemu-system-x86_64 -cdrom $(Iso) -serial stdio -no-reboot
 
 debug: $(Iso)
 	qemu-system-x86_64 \
