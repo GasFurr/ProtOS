@@ -50,6 +50,16 @@ make release # Funny, *release*
 
 ---
 
+### **Changelog (alpha v0.3.0 )**
+```
++ Pretends to handle keyboard interrupts
++ Added existential crisis to shell  
+- Removed hope. Changed system philosophy.
+! Font now 12% more buggy.
+```
+
+---
+
 ### Current State of the Union:
 - **What works**:  
   `Keyboard?` Sorta  
@@ -61,27 +71,15 @@ make release # Funny, *release*
 
 ---
 
-### Philosophy:
 
-*"Why walk when you can segfault?"*
 
----
-
-### Roadmap (Delusional Edition):
+### Roadmap
 1. RTC (Real time clock)
 2. Filesystem 
 3. Whatever? Having fun? Take a shower?
 4. Ah, yeah, ZIG rewrite. (0.4.0 with all restructing and optimiztion.)
 
 ---
-
-### **Changelog (alpha v0.3.0 )**
-```
-+ Pretends to handle keyboard interrupts
-+ Added existential crisis to shell  
-- Removed hope. Changed system philosophy.
-! Font now 12% more buggy.
-```
 
 ---
 
