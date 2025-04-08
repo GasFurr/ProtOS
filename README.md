@@ -26,31 +26,15 @@ Born from insomnia and spite, it's:
 ---
 
 ### **Why Bother?**
-- **Because 1993 called** - Let's rebuild UNIX but with RGB  
-- **For the aesthetic** - Light-blue text on black background never hurt anyone 
 
-(except your retinas)  
-- **Actual reason** - I forgot how to stop coding this. Just another hyperfixation.
-
-((I again stayed up until 4AM coding to My Bloody Valentine albums))
-
----
-
-```bash
-# Clone with surgical hatred
-git clone https://github.com/GasFurr/ProtOS.git && cd ProtOS
-
-# Build instructions for the brave
-make && make run  # Pray to your favorite dead computer scientist
-
-make bios # If you love VGA. No, VGA not working.
-
-make release # Funny, *release*
-```
+- **Because 1993 called** - Let's rebuild UNIX in ZIG with RGB and white monster.
+- **For the aesthetic** - Light-blue text on black background never hurt anyone.
+- **Actual reason** - I forgot how to stop coding this.
 
 ---
 
 ### **Changelog (alpha v0.3.0 )**
+
 ```
 + Pretends to handle keyboard interrupts
 + Added existential crisis to shell  
@@ -60,30 +44,18 @@ make release # Funny, *release*
 
 ---
 
-### Current State of the Union:
+### Current State of the Union
+
 - **What works**:  
-  `Keyboard?` Sorta  
-  `Screen?` Pixel vomit  
-  `Hope?` ¯\_(ツ)_/¯
+  `Nothing`
 
 - **What doesn't**:  
-  `Your expectations`
-
-![image](https://github.com/user-attachments/assets/c3ff4c8f-6063-4d34-996e-5e54c298992f)
-
----
-
-### Roadmap
-1. RTC (Real time clock)
-2. Filesystem 
-3. Whatever? Having fun? Take a shower?
-4. Ah, yeah, ZIG rewrite. (0.4.0 with all restructing and optimiztion.)
-
----
+  `Everything.`
 
 ---
 
 ### **Legal-ish Stuff**
+
 MIT Licensed - Do crimes with this code idc.
 (Just add "©GasFurr" somewhere)
 
