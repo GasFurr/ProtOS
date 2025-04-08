@@ -1,1 +1,0 @@
-// Multiboot tags parsing driver.

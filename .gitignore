@@ -17,5 +17,8 @@ release/
 # Result kernel files
 isodir/
 
+# Fonts
+*.psf
+
 # Ignore logs
 *.log
