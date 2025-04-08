@@ -69,9 +69,9 @@ make release # Funny, *release*
 - **What doesn't**:  
   `Your expectations`
 
+![image](https://github.com/user-attachments/assets/c3ff4c8f-6063-4d34-996e-5e54c298992f)
+
 ---
-
-
 
 ### Roadmap
 1. RTC (Real time clock)
