@@ -57,17 +57,14 @@ Born from insomnia and spite, it's:
 ### **Legal-ish Stuff**
 
 MIT Licensed - Do crimes with this code idc.
-(Just add "©GasFurr" somewhere)
+(Just add "© GasFurr" somewhere)
 
 ---
 
+
 <div align="center">
-  
-```asciiart
- /\_/\  
-( ◕‿◕ ) 
- > ᴗ <   /* Compiles through tears */
-```
+
+` > ᴗ <  /* Compiles through tears */`
 
 **UNIX is user-friendly**  
 *It just hates you personally*
