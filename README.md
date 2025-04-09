@@ -91,11 +91,7 @@ MIT Licensed - Do crimes with this code idc.
 
 <div align="center">
   
-```asciiart
- /\_/\  
-( ◕‿◕ ) 
- > ᴗ <   /* Compiles through tears */
-```
+`> ᴗ <   /* Compiles through tears */`
 
 **UNIX is user-friendly**  
 *It just hates you personally*
