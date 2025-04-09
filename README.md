@@ -72,6 +72,7 @@ make release # Funny, *release*
 ![image](https://github.com/user-attachments/assets/c3ff4c8f-6063-4d34-996e-5e54c298992f)
 
 (screenshot from emulator, image on background is just my hyprland transparency.)
+
 ---
 
 ### Roadmap
