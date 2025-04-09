@@ -33,13 +33,10 @@ Born from insomnia and spite, it's:
 
 ---
 
-### **Changelog (alpha v0.3.0 )**
+### **Changelog (alpha v0.3.1 )**
 
 ```
-+ Pretends to handle keyboard interrupts
-+ Added existential crisis to shell  
-- Removed hope. Changed system philosophy.
-! Font now 12% more buggy.
+- Deleted everything.
 ```
 
 ---
@@ -64,7 +61,7 @@ MIT Licensed - Do crimes with this code idc.
 
 <div align="center">
 
-` > ᴗ <  /* Compiles through tears */`
+` > w <  /* Compiles through tears */`
 
 **UNIX is user-friendly**  
 *It just hates you personally*
