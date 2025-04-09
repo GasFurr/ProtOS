@@ -5,7 +5,7 @@
 
 [![License: Fuck Around](https://img.shields.io/badge/license-MIT-red)](https://choosealicense.com/licenses/mit/)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/GasFurr/ProtOS?color=orange)
-![Version](https://img.shields.io/badge/version-0.3.0--alpha-yellow)
+![Version](https://img.shields.io/badge/version-0.3.1--alpha-yellow)
 
 </div>
 
