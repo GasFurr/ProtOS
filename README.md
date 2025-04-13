@@ -17,7 +17,7 @@
 
 ---
 
-**ProtOS** is a kernel that shouldn't exist.  
+**ProtOS** is a WIP ernel that shouldn't exist.  
 Born from insomnia and spite, it's:
 
 - A 32-bit time capsule for broken hardware
