@@ -125,6 +125,7 @@ make bios
 ---
 
 (Yeah, i think 85% is fine for idt/gdt and exception handler.)
+For real hardware:
 (Keyboard working only on some laptops or through PS2 port!)
 
 ## No more changelogs before 0.4.0 (Full restucturization)
