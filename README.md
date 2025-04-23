@@ -74,10 +74,9 @@ yay -S grub nasm gcc binutils qemu-full edk2-ovmf
 # For our Debian/Ubuntu friends:
 sudo apt install grub-pc nasm gcc binutils qemu-system-x86 ovmf
 ```
+</details>
 
 For windows: I don't know? Really never tried to run build it on windows.
-
-</details>
 
 ```bash
 # Clone with surgical precision
@@ -124,7 +123,7 @@ make bios
 | bschell                       | 🚧 30%    | Terminal therapy     |
 | Branding                      | ✅ 100%   | No longer disgusting |
 (Yeah, i think 85% is fine for idt/gdt and exception handler.)
-
+(Keyboard working only on some laptops or through PS2 port!)
 ---
 
 ## No more changelogs before 0.4.0 (Full restucturization)
