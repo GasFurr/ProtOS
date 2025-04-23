@@ -122,21 +122,16 @@ make bios
 | Time drivers                  | 🚧 70%    | Chronomancy          |
 | bschell                       | 🚧 30%    | Terminal therapy     |
 | Branding                      | ✅ 100%   | No longer disgusting |
+---
+
 (Yeah, i think 85% is fine for idt/gdt and exception handler.)
 (Keyboard working only on some laptops or through PS2 port!)
----
 
 ## No more changelogs before 0.4.0 (Full restucturization)
 
 At that time i will restructurize, rewrite and optimize all my code,
 an in this version i will write full documentation. For now all this is just
 a black box because i am too lazy for making changelogs every update understanding
-that nobody reads it anyway.
-
-### Known issues
-
-KOutput_center() poorly coded and just dont really work as it should
-Hardcoded 1920x1080 resolution.
 
 ---
 
