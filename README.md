@@ -75,6 +75,8 @@ yay -S grub nasm gcc binutils qemu-full edk2-ovmf
 sudo apt install grub-pc nasm gcc binutils qemu-system-x86 ovmf
 ```
 
+For windows: I don't know? Really never tried to run build it on windows.
+
 </details>
 
 ```bash
