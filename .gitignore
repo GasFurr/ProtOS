@@ -16,6 +16,7 @@ release/
 
 # Result kernel files
 isodir/
+.zig-cache/
 
 # Fonts
 *.psf
