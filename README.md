@@ -5,7 +5,7 @@
 
 [![License: Fuck Around](https://img.shields.io/badge/license-MIT-red)](https://choosealicense.com/licenses/mit/)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/GasFurr/ProtOS?color=orange)
-![Version](https://img.shields.io/badge/version-0.3.0--alpha-yellow)
+![Version](https://img.shields.io/badge/version-0.3.1--alpha-yellow)
 
 </div>
 
@@ -17,7 +17,7 @@
 
 ---
 
-**ProtOS** is a kernel that shouldn't exist.  
+**ProtOS** is a WIP ernel that shouldn't exist.  
 Born from insomnia and spite, it's:
 
 - A 32-bit time capsule for broken hardware
@@ -33,13 +33,10 @@ Born from insomnia and spite, it's:
 
 ---
 
-### **Changelog (alpha v0.3.0 )**
+### **Changelog (alpha v0.3.1 )**
 
 ```
-+ Pretends to handle keyboard interrupts
-+ Added existential crisis to shell  
-- Removed hope. Changed system philosophy.
-! Font now 12% more buggy.
+- Deleted everything.
 ```
 
 ---
@@ -64,7 +61,7 @@ MIT Licensed - Do crimes with this code idc.
 
 <div align="center">
 
-` > ᴗ <  /* Compiles through tears */`
+` > w <  /* Compiles through tears */`
 
 **UNIX is user-friendly**  
 *It just hates you personally*
