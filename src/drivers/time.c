@@ -8,8 +8,7 @@
 static volatile uint32_t system_ticks = 0;
 
 // Proper interrupt handler with attributes
-void __attribute__((interrupt)) timer_handler(struct interrupt_frame *frame) {
-  (void)frame; // Explicitly mark unused parameter
+void timer_handler() {
   system_ticks++;
   outb(0x20, 0x20); // Send EOI to PIC
 }
